@@ -1,35 +1,22 @@
 import * as THREE from "three";
 import {OrbitControls} from "orbi";
 import {LightManager} from "lightManager";
+import {ConnectionManager} from "connectionManager";
 export var camera, scene, renderer,datGui,model,lightManager,animator,controls,ground;
-const arr = [
-    {
-        "id":"küche",
-        "state":false,
-        "color":"",
-        "position": 2
-    },
-    {
-        "id":"flur",
-        "state":true,
-        "color":"",
-        "position": 4,
-    },
-    {
-        "id":"esszimmer",
-        "state":false,
-        "color":"",
-        "position":6,
-    },
-]
-var randomCounter = 0
+var  connectionManager
+
+connectionManager = new ConnectionManager()
+connectionManager.init().then(e=>{
+    init()
+    requestAnimationFrame(animate)
+})
+
 function init() {
     //scene -> 3D raum
     scene = new THREE.Scene();
-
-    lightManager = new LightManager(arr)
     
-
+    
+     lightManager = connectionManager.lightManager
     //licht
     var ambient =  new THREE.AmbientLight(0xFFFFFF,0)   
     //camera
@@ -51,6 +38,7 @@ function init() {
     scene.add(ground)
     lightManager.render(scene)
     
+    
     //renderer -> die "mach-sichtbar-maschiene"
     renderer = new THREE.WebGLRenderer();
     renderer.setClearColor(0xaaaaaa) //hintergrundfarbe
@@ -70,13 +58,9 @@ function init() {
 var secondRandomCounter = 0
 function animate(){
     requestAnimationFrame(animate)
-    if(randomCounter > 60){
-        lightManager.switchStates(arr[secondRandomCounter].id)
-        secondRandomCounter >= 2 ? secondRandomCounter =0:secondRandomCounter++
-        randomCounter = 0
-    }
+   
 
-    randomCounter++
+  
     controls.update();
    
 	renderer.render( scene, camera );
@@ -98,5 +82,4 @@ function generateGround(){
     
 }
 
-init()
-requestAnimationFrame(animate)
+

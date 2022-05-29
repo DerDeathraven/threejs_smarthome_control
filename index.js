@@ -23,3 +23,30 @@ app.get("/", (req, res) => {
 
 
 });
+io.on("connection",socket=>{
+    console.log("connection established")
+
+    socket.on("getLights",(e,callback)=>{
+        const arr = [
+            {
+                "id":"küche",
+                "state":false,
+                "color":"",
+                "position": 2
+            },
+            {
+                "id":"flur",
+                "state":true,
+                "color":"",
+                "position": 4,
+            },
+            {
+                "id":"esszimmer",
+                "state":false,
+                "color":"",
+                "position":6,
+            },
+        ]
+        callback(arr)
+    })
+})

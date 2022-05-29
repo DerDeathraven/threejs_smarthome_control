@@ -21,4 +21,11 @@ export class LightManager{
     switchStates(id){
         this.lights.find(x=>x.id === id).changeState()
     }
+    getIDs(){
+        var buff = []
+        this.lights.forEach(e=>{
+            buff.push(e.id)
+        })
+        return buff
+    }
 }
