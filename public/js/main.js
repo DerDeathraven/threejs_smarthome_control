@@ -1,8 +1,16 @@
 import * as THREE from "three";
-import {OrbitControls} from "orbi";
-import {ConnectionManager} from "connectionManager";
+import { OrbitControls } from "orbi";
+import { ConnectionManager } from "connectionManager";
+import { JqueryManager } from "jqueryManager";
+import { SceneStateMachine } from "sceneStateMachine";
+import { PlaceModeManager } from "placeModeManager";
+
 export var camera, scene, renderer,datGui,model,lightManager,animator,controls,ground;
-var  connectionManager
+var sceneStateMachine
+var connectionManager
+var jqueryManager 
+var placeModeManager
+
 
 connectionManager = new ConnectionManager()
 connectionManager.init().then(e=>{
@@ -11,12 +19,11 @@ connectionManager.init().then(e=>{
 })
 
 function init() {
+    
     //scene -> 3D raum
     scene = new THREE.Scene();
+    lightManager = connectionManager.getManager("light")
     
-    
-     lightManager = connectionManager.getManager("light")
-     console.log(lightManager)
     //licht
     var ambient =  new THREE.AmbientLight(0xFFFFFF,0)   
     //camera
@@ -37,7 +44,10 @@ function init() {
     scene.add(ambient)
     scene.add(ground)
     lightManager.render(scene)
-    
+    //connect classes
+    placeModeManager = new PlaceModeManager(scene,camera)
+    sceneStateMachine = new SceneStateMachine(placeModeManager)
+    jqueryManager =  new JqueryManager(sceneStateMachine)
     
     //renderer -> die "mach-sichtbar-maschiene"
     renderer = new THREE.WebGLRenderer();
@@ -58,10 +68,16 @@ function init() {
 function animate(){
     requestAnimationFrame(animate)
    
-
+    if(sceneStateMachine.needsUpdate){
+        sceneStateMachine.needsUpdate = !sceneStateMachine.needsUpdate
+        jqueryManager.updateHud()
+       
+    }
+    if(sceneStateMachine.isPlaceMode){
+        placeModeManager.update(camera)
+    }
   
     controls.update();
-   
 	renderer.render( scene, camera );
     
 }

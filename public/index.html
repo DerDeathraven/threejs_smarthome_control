@@ -14,7 +14,10 @@
                 "orbi":"https://threejs.org/examples/jsm/controls/OrbitControls.js",
                 "glb":"https://threejs.org/examples/jsm/loaders/GLTFLoader.js",
                 "lightManager": "./js/classes/LightManager.js",
-                "connectionManager":"./js/classes/ConnectionManager.js"
+                "connectionManager":"./js/classes/ConnectionManager.js",
+                "jqueryManager": "./js/classes/jqueryManager.js",
+                "sceneStateMachine":"./js/classes/sceneStateMachine.js",
+                "placeModeManager":"./js/classes/placeModeManager.js"
             }
         }
     </script>
@@ -22,7 +25,6 @@
 
     <link rel="stylesheet" href="/css/style.css">
     <script src="/socket.io/socket.io.js" defer></script>
-    <script src="./js/jqueryTriggers.js" defer></script>
     <script  type="module" src="./js/main.js" defer></script>
 </head>
 <body>
@@ -34,6 +36,17 @@
             Place Mode
         </div>
         
+    </div>
+    <div class="placeMode">
+        <div class="placeModeHeader">
+            Place Lamps
+        </div>
+        <div class="placeModeText">
+            <div class="lampIcon"></div> <div> Lamp</div>
+        </div>
+        <div class="objectList">
+
+        </div>
     </div>
     
 
