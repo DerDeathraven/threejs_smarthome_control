@@ -1,9 +1,10 @@
 import {Light} from 'light'
 
 export class LightManager{
-    constructor(lightJSON){
+    constructor(lightJSON) {
         this.lightJSON = lightJSON
         this.lights = [];
+        this.findWord = "light"
         this.fillLights();
     }
     fillLights(){
@@ -18,8 +19,8 @@ export class LightManager{
         })
         console.log(object)
     }
-    switchStates(id){
-        this.lights.find(x=>x.id === id).changeState()
+    switchStates(id,state){
+        this.lights.find(x=>x.id === id).changeState(state)
     }
     getIDs(){
         var buff = []

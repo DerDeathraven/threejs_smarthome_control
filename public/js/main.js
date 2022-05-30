@@ -1,6 +1,5 @@
 import * as THREE from "three";
 import {OrbitControls} from "orbi";
-import {LightManager} from "lightManager";
 import {ConnectionManager} from "connectionManager";
 export var camera, scene, renderer,datGui,model,lightManager,animator,controls,ground;
 var  connectionManager
@@ -16,7 +15,8 @@ function init() {
     scene = new THREE.Scene();
     
     
-     lightManager = connectionManager.lightManager
+     lightManager = connectionManager.getManager("light")
+     console.log(lightManager)
     //licht
     var ambient =  new THREE.AmbientLight(0xFFFFFF,0)   
     //camera
@@ -55,7 +55,6 @@ function init() {
  
 
 }
-var secondRandomCounter = 0
 function animate(){
     requestAnimationFrame(animate)
    

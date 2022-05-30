@@ -3,13 +3,14 @@ import {LightManager} from "lightManager"
 export class ConnectionManager{
     constructor(object){
         this.socket = io()
+        this.managers = []
     }
      init() {
         var me = this
          var ret = new Promise(function(resolve, reject){
             
             me.socket.emit("getLights",true,e=>{ 
-                me.lightManager =  new LightManager(e)
+                me.managers.push(new LightManager(e))
                 resolve()
            
             })
@@ -21,13 +22,26 @@ export class ConnectionManager{
        
     }
     subscribe() {
-        var me = this
-        var idArr = this.lightManager.getIDs()
-        idArr.forEach(e=>{
-            this.socket.on(`light_${e}`,f=>{
-                this.lightManager.lights.find(x=>x.id === e).switchStates()
+        var me = this;
+        this.socket.on("update", e=>{
+            me.managers.forEach(m=>{
+                if(m.findWord == e.group){
+                    console.log("test")
+                    m.switchStates(e.id,e.message)
+                }
             })
         })
+    }
+    getManager(findWord) {
+        var buff
+        this.managers.forEach(m=>{
+            if(m.findWord==findWord){
+                console.log("ping")
+                buff = m
+            }
+            
+        })
+        return buff
     }
 
 }

@@ -19,8 +19,10 @@ export class Light{
         
         return cube;
     }
-    changeState(){
-        if(this.state){
+    changeState(state){
+        this.state = state;
+        console.log(state)
+        if(!this.state){
             this.object.material.color.setHex(0x808080);
         }else{
             this.object.material.color.setHex(0xFFA500) ;
