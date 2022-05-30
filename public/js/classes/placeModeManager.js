@@ -60,8 +60,10 @@ export class PlaceModeManager{
         })
     }
     endListners(){
-        $(document).off()
+        $(document).off("mousemove")
+        $(document).off("mousedown")
         $(".placeMode").off()
+        this.placing = false
     }
     update(){
        if(this.placing){
@@ -109,6 +111,7 @@ export class PlaceModeManager{
         const material = new THREE.MeshBasicMaterial( {color: 0x808080} );
         var cube = new THREE.Mesh( geometry, material );
         cube.userData.name =`cube#${this.placedObjects.length}`
+        cube.userData.number = this.placedObjects.length
         this.placedObjects.push(cube)
         this.scene.add( cube );
         cube.position.x = this.startingCords.x;
@@ -117,13 +120,27 @@ export class PlaceModeManager{
         cube.scale.z = this.lastCords.z - this.startingCords.z
     }
     updateList(){
+        $(".objectDeleteButton").off()
         var me = this
         var container = document.createElement("div")
         this.placedObjects.forEach(o=>{
+            console.log(o)
             $(container).append(me.createDiv(o))
         })
-        $(".objectList").html("")
+        $(".objectList").html(" ")
         $(".objectList").append(container)
+        $(".objectDeleteButton").on("click",e=>{
+            var id = $(e.target).data("id")
+            me.scene.remove(me.placedObjects[id])
+            me.placedObjects.splice(id,1)
+            console.log(me.placedObjects)
+            me.placedObjects.forEach((e,i)=>{
+                e.userData.name = `cube#${i}`
+                e.userData.id = i
+
+            })
+            me.updateList()
+        })
     }
     createDiv(o){
         var container = document.createElement("div")
@@ -136,7 +153,7 @@ export class PlaceModeManager{
         
         //button content
         var deleteButton = document.createElement("div")
-        $(deleteButton).addClass("objectDeleteButton").text("X")
+        $(deleteButton).addClass("objectDeleteButton").text("X").data("id",o.userData.number)
         $(button).append(deleteButton).addClass("objectButtons")
         //container append 
 
