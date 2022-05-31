@@ -79,5 +79,24 @@ body{
         display: flex;
 
         border: 1px solid green;
+        .infoScreen{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            .infoScreenHeader{
+                text-align: center;
+            }
+            .infoScreenContent{
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                .keyPair{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    width: 100%;
+                }
+            }
+        }
     }
 }

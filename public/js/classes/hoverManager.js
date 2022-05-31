@@ -8,7 +8,8 @@ export class HoverManager{
     update(intersects){
         if(intersects[0].object.userData.isDevice){
             var id = intersects[0].object.userData.id;
-            var light = htis.lightManager.getLightbyID(id)
+            console.log(id)
+            var light = this.lightManager.getLightbyID(id)
 
             this.updateScreen(light);
         }
@@ -19,7 +20,7 @@ export class HoverManager{
         var content =  this.generateScreenContent(device)
 
         //fill header
-        $(header).text(device.id).addClass("infoScreenHeader").appendTo(container)
+        $(header).text("Light").addClass("infoScreenHeader").appendTo(container)
         $(content).addClass("infoScreenContent").appendTo(container)
 
         $(container).addClass("infoScreen")
@@ -30,14 +31,17 @@ export class HoverManager{
     }
     generateScreenContent(device){
         var container = document.createElement("div")
+        var ignoreArr = ["object","position"]
         Object.keys(device).forEach(k=>{
-            var keyPair = document.createElement("div")
-            var key = document.createElement("div")
-            var value = document.createElement("div")
+            if(ignoreArr.indexOf(k)==-1){
+                var keyPair = document.createElement("div")
+                var key = document.createElement("div")
+                var value = document.createElement("div")
 
-            $(key).text(k).appendTo(keyPair).addClass("key")
-            $(value).text(device[key]).appendTo(keyPair).addClass("value")
-            $(keyPair).appendTo(container).addClass("keyPair")
+                $(key).text(k).appendTo(keyPair).addClass("key")
+                $(value).text(device[k]).appendTo(keyPair).addClass("value")
+                $(keyPair).appendTo(container).addClass("keyPair")
+            }
 
         })
         return container

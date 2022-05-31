@@ -118,4 +118,44 @@ body .infoScreenContainer {
   display: flex;
   border: 1px solid green;
 }
+
+body .infoScreenContainer .infoScreen {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+}
+
+body .infoScreenContainer .infoScreen .infoScreenHeader {
+  text-align: center;
+}
+
+body .infoScreenContainer .infoScreen .infoScreenContent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+}
+
+body .infoScreenContainer .infoScreen .infoScreenContent .keyPair {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100%;
+}
 /*# sourceMappingURL=style.css.map */

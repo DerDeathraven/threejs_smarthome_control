@@ -29,8 +29,18 @@ export class LightManager{
         })
         return buff
     }
+    getLightbyID(id){
+        var buff
+        this.lights.forEach(e=>{
+            if(e.id === id){
+                buff = e
+            }
+        })
+        return buff
+    }
     addLight(light){
         var newLight = new Light(light.id,light.state,light.color,light.position)
+        console.log(light.id)
         this.lights.push(newLight)
         this.object.add(newLight.object)
         console.log(light.position)

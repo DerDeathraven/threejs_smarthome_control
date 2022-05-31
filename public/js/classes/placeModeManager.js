@@ -8,6 +8,7 @@ export class PlaceModeManager{
         this.scene = scene;
         this.camera = camera
         this.lightManager = lightManager
+        this.hoverManager = new HoverManager(scene, camera, lightManager)
 
         //Managment Arrays
         this.placeModeObjects = []
@@ -81,10 +82,11 @@ export class PlaceModeManager{
         this.placing = false
     }
     update(){
-       if(this.placing){
         this.raycaster.setFromCamera( this.mousePosition, this.camera );
         
         var intersects = this.raycaster.intersectObjects( this.scene.children );
+        this.hoverManager.update(intersects)
+       if(this.placing){
         if(intersects[0].userData){
             intersects = intersects[1]
         }else{
@@ -105,6 +107,7 @@ export class PlaceModeManager{
         
 
        }
+       
 
 
     }
@@ -211,7 +214,7 @@ export class PlaceModeManager{
                 position: new THREE.Vector3(cordX,2,cordZ),
             }
             var placedLamp = this.lightManager.addLight(light)
-            placedLamp.object.userData.id = this.placedLamps.length
+            placedLamp.object.userData.listPlace = this.placedLamps.length
             console.log(this.placedLamps)
             this.placedLamps.push(placedLamp)
     }
