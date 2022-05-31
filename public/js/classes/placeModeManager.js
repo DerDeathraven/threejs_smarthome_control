@@ -1,19 +1,33 @@
 import * as THREE from "three"
 
 export class PlaceModeManager{
-    constructor(scene,camera){
+    constructor(scene,camera,lightManager){
+
+        //Global Objects
         this.scene = scene;
         this.camera = camera
+        this.lightManager = lightManager
+
+        //Managment Arrays
         this.placeModeObjects = []
         this.placedObjects = []
-        this.placing = false;
+        this.placedRooms = []
+        this.placedLamps = []
 
-        this.mousePosition = new THREE.Vector2();
-        this.startingCords = new THREE.Vector3(0,0,0)
-        this.lastCords = new THREE.Vector3();
+        //state machine booleans
+        this.placing = false;
+        this.placeLamp = false;
+        this.isInDiv = false
+
+        //various vectors
+        this.mousePosition = new THREE.Vector2(); //Postion of cursor
+        this.startingCords = new THREE.Vector3(0,0,0)//starting cords of the room
+        this.lastCords = new THREE.Vector3(); //last know cords of the room
+
+        //reusable raycaster
         this.raycaster = new THREE.Raycaster();
 
-        this.isInDiv = false
+        
 
 
     }
@@ -25,38 +39,38 @@ export class PlaceModeManager{
         this.endListners()
     }
     setListners(){
+        var me = this;
         $(document).on('mousemove',e=>{
             this.mousePosition.x = ( e.clientX / window.innerWidth ) * 2 - 1;
             this.mousePosition.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
         })
         $(document).on("mousedown",e=>{
-            if(!this.isInDiv){
-                if(e.button === 0){
-                
-                this.placing = !this.placing
-                console.log(this.placing)
-                if(this.placing){
-                this.raycaster.setFromCamera( this.mousePosition, this.camera );
-                const intersects = this.raycaster.intersectObjects( this.scene.children )[0];
-                this.startingCords.z = Math.floor(intersects.point.z)
-                this.startingCords.x = Math.floor(intersects.point.x)
-
-                this.lastCords.set(this.startingCords)
-                this.createPreviewCube()
+            if(!this.isInDiv && e.button === 0){
+                if(!this.placeLamp){
+                    this.placeRoomPreview()
                 }else{
-                    this.addPlate()
-                    this.updateList()
-                    this.scene.remove(this.previewCube)
-                    this.startingCords = new THREE.Vector3()
+                    this.placeLampHere()
                 }
-            }
+
         }
         })
-        $(".placeMode").on("mouseenter",e=>{
+        $(".menuItem").on("mouseenter",e=>{
             this.isInDiv = true
         })
-        $(".placeMode").on("mouseleave",e=>{
+        $(".menuItem").on("mouseleave",e=>{
             this.isInDiv = false
+        })
+        $(".selector").on("click",e=>{
+            var data = $(e.target).data("id")
+            switch(data){
+                case 0:
+                    me.placeLamp = false;
+                    break;
+                case 1:
+                    me.placeLamp = true;
+                    break;
+                
+            }
         })
     }
     endListners(){
@@ -108,7 +122,7 @@ export class PlaceModeManager{
     addPlate(){
         const geometry = new THREE.BoxGeometry( 1, 1, 1 );
         geometry.translate( 0.5, 0.5, 0.5 );
-        const material = new THREE.MeshBasicMaterial( {color: 0x808080} );
+        const material = new THREE.MeshBasicMaterial( {color: 0xFFDBAC} );
         var cube = new THREE.Mesh( geometry, material );
         cube.userData.name =`cube#${this.placedObjects.length}`
         cube.userData.number = this.placedObjects.length
@@ -162,6 +176,43 @@ export class PlaceModeManager{
         return container
 
 
+    }
+    placeRoomPreview(){
+        this.placing = !this.placing
+                if(this.placing){
+                this.raycaster.setFromCamera( this.mousePosition, this.camera );
+                const intersects = this.raycaster.intersectObjects( this.scene.children )[0];
+                this.startingCords.z = Math.floor(intersects.point.z)
+                this.startingCords.x = Math.floor(intersects.point.x)
+
+                this.lastCords.set(this.startingCords)
+                this.createPreviewCube()
+                }else{
+                    this.addPlate()
+                    this.updateList()
+                    this.scene.remove(this.previewCube)
+                    this.startingCords = new THREE.Vector3()
+                }
+    }
+    placeLampHere(){
+        
+            this.raycaster.setFromCamera( this.mousePosition, this.camera );
+            const intersects = this.raycaster.intersectObjects( this.scene.children );
+            if(intersects[0].object.userData.isLamp) return //if true: is one of my lamps so we dont place another one there
+
+            const cordX = Math.floor(intersects[0].point.x)
+            const cordZ = Math.floor(intersects[0].point.z)
+
+            var light = {
+                id: `light#${this.placedLamps.length}`,
+                state: false,
+                color: 0xFFFFFF,
+                position: new THREE.Vector3(cordX,2,cordZ),
+            }
+            var placedLamp = this.lightManager.addLight(light)
+            placedLamp.object.userData.id = this.placedLamps.length
+            console.log(this.placedLamps)
+            this.placedLamps.push(placedLamp)
     }
 
 }

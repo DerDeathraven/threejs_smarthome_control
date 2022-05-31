@@ -49,28 +49,30 @@ body .placeMode {
   width: 10vw;
   height: 50vh;
   border: 1px solid green;
+  text-align: center;
 }
 
 body .placeMode .placeModeText {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 100%;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  text-align: center;
 }
 
-body .placeMode .placeModeText .lampIcon {
-  width: 5px;
-  aspect-ratio: 1/1;
-  border: 1px solid green;
+body .placeMode .placeModeText div {
+  width: 50%;
 }
 
-body .placeMode .placeModeText:hover {
+body .placeMode .placeModeText div:hover {
   background-color: green;
   color: white;
 }

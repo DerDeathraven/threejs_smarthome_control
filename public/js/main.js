@@ -45,7 +45,7 @@ function init() {
     scene.add(ground)
     lightManager.render(scene)
     //connect classes
-    placeModeManager = new PlaceModeManager(scene,camera)
+    placeModeManager = new PlaceModeManager(scene,camera,lightManager)
     sceneStateMachine = new SceneStateMachine(placeModeManager)
     jqueryManager =  new JqueryManager(sceneStateMachine)
     

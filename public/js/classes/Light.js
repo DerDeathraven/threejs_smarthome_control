@@ -12,23 +12,21 @@ export class Light{
 
     }
     generateObject(){
-        const color = this.state ? 0xFFA500 : 0x808080
+        const color = this.state ? 0xFFA500 : 0x808080;
         const geometry = new THREE.BoxGeometry( 1, 1, 1 );
         const material = new THREE.MeshBasicMaterial( {color: color} );
         const cube = new THREE.Mesh( geometry, material );
+        cube.userData.isLamp = true;
         
         return cube;
     }
     changeState(state){
         this.state = state;
-        console.log(state)
         if(!this.state){
             this.object.material.color.setHex(0x808080);
         }else{
             this.object.material.color.setHex(0xFFA500) ;
         }
-        
-        
         this.state = !this.state
     }
 }

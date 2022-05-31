@@ -13,11 +13,11 @@ export class LightManager{
         })
     }
     render(object){
+        this.object = object
         this.lights.forEach(e=>{
             object.add(e.object)
             e.object.position.x = e.position
         })
-        console.log(object)
     }
     switchStates(id,state){
         this.lights.find(x=>x.id === id).changeState(state)
@@ -28,5 +28,13 @@ export class LightManager{
             buff.push(e.id)
         })
         return buff
+    }
+    addLight(light){
+        var newLight = new Light(light.id,light.state,light.color,light.position)
+        this.lights.push(newLight)
+        this.object.add(newLight.object)
+        console.log(light.position)
+        newLight.object.position.copy(light.position)
+        return newLight
     }
 }
