@@ -2,9 +2,10 @@ import * as THREE from "three"
 
 
 export class Light{
-    constructor(id,state,color,position){
+    constructor(id,name,state,color,position){
         
         this.id = id;
+        this.name = name;
         this.state = state;
         this.color = color;
         this.position = position;

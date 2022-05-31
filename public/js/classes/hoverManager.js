@@ -7,11 +7,13 @@ export class HoverManager{
     }
     update(intersects){
         if(intersects[0].object.userData.isDevice){
+            $(".infoScreenContainer").show()
             var id = intersects[0].object.userData.id;
-            console.log(id)
             var light = this.lightManager.getLightbyID(id)
 
             this.updateScreen(light);
+        }else{
+            $(".infoScreenContainer").hide()
         }
     }
     updateScreen(device){
@@ -31,7 +33,7 @@ export class HoverManager{
     }
     generateScreenContent(device){
         var container = document.createElement("div")
-        var ignoreArr = ["object","position"]
+        var ignoreArr = ["object","position","id"]
         Object.keys(device).forEach(k=>{
             if(ignoreArr.indexOf(k)==-1){
                 var keyPair = document.createElement("div")

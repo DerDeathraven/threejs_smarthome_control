@@ -99,7 +99,6 @@ export class PlaceModeManager{
 
         if(roundedY!=this.lastCords.z || roundedX!=this.lastCords.x){
             this.previewCube.scale.x =roundedX - this.startingCords.x
-            console.log(this.startingCords.x)
             this.previewCube.scale.z = roundedY - this.startingCords.z
 
         }
@@ -138,21 +137,14 @@ export class PlaceModeManager{
         $(".objectDeleteButton").off()
         var me = this
         var container = document.createElement("div")
-        this.placedObjects.forEach(o=>{
-            $(container).append(me.createDiv(o))
+        this.roomManager.rooms.forEach(r=>{
+            $(container).append(me.createDiv(r))
         })
         $(".objectList").html(" ")
         $(".objectList").append(container)
         $(".objectDeleteButton").on("click",e=>{
             var id = $(e.target).data("id")
-            me.scene.remove(me.placedObjects[id])
-            me.placedObjects.splice(id,1)
-            console.log(me.placedObjects)
-            me.placedObjects.forEach((e,i)=>{
-                e.userData.name = `cube#${i}`
-                e.userData.id = i
-
-            })
+            me.roomManager.deleteRoom(id)
             me.updateList()
         })
     }
@@ -162,12 +154,12 @@ export class PlaceModeManager{
         var button = document.createElement("div")
 
         //name content
-        $(name).text(o.userData.name).addClass("objectName")
+        $(name).text(o.name).addClass("objectName")
         
         
         //button content
         var deleteButton = document.createElement("div")
-        $(deleteButton).addClass("objectDeleteButton").text("X").data("id",o.userData.number)
+        $(deleteButton).addClass("objectDeleteButton").text("X").data("id",o.id)
         $(button).append(deleteButton).addClass("objectButtons")
         //container append 
 
@@ -199,18 +191,20 @@ export class PlaceModeManager{
             this.raycaster.setFromCamera( this.mousePosition, this.camera );
             const intersects = this.raycaster.intersectObjects( this.scene.children );
             if(intersects[0].object.userData.isLamp) return //if true: is one of my lamps so we dont place another one there
+            if(intersects[0].object.userData.isRoom !== true)return
+            var rID= intersects[0].object.userData.id //room ID
 
             const cordX = Math.floor(intersects[0].point.x)
             const cordZ = Math.floor(intersects[0].point.z)
 
             var light = {
-                id: `light#${this.placedLamps.length}`,
                 state: false,
                 color: 0xFFFFFF,
                 position: new THREE.Vector3(cordX,2,cordZ),
             }
             var placedLamp = this.lightManager.addLight(light)
             placedLamp.object.userData.listPlace = this.placedLamps.length
+            this.roomManager.addLightToRoom(rID, placedLamp.id)
             console.log(this.placedLamps)
             this.placedLamps.push(placedLamp)
     }
