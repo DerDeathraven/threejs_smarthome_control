@@ -2,12 +2,13 @@ import * as THREE from "three"
 import {HoverManager} from "hoverManager"
 
 export class PlaceModeManager{
-    constructor(scene,camera,lightManager){
+    constructor(scene,camera,lightManager,roomManager){
 
         //Global Objects
         this.scene = scene;
         this.camera = camera
         this.lightManager = lightManager
+        this.roomManager = roomManager
         this.hoverManager = new HoverManager(scene, camera, lightManager)
 
         //Managment Arrays
@@ -123,26 +124,21 @@ export class PlaceModeManager{
         this.previewCube.position.x = this.startingCords.x
         this.previewCube.position.z = this.startingCords.z
     }
-    addPlate(){
-        const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-        geometry.translate( 0.5, 0.5, 0.5 );
-        const material = new THREE.MeshBasicMaterial( {color: 0xFFDBAC} );
-        var cube = new THREE.Mesh( geometry, material );
-        cube.userData.name =`cube#${this.placedObjects.length}`
-        cube.userData.number = this.placedObjects.length
-        this.placedObjects.push(cube)
-        this.scene.add( cube );
-        cube.position.x = this.startingCords.x;
-        cube.position.z = this.startingCords.z;
-        cube.scale.x = this.lastCords.x -this.startingCords.x
-        cube.scale.z = this.lastCords.z - this.startingCords.z
+    addRoom(){
+        var roomData = {
+            name: `Room${this.placedRooms.length}`,
+            position: new THREE.Vector3().copy(this.startingCords),
+            scaleX: this.lastCords.x -this.startingCords.x,
+            scaleZ: this.lastCords.z - this.startingCords.z
+        }
+        this.roomManager.addRoom(roomData)
+    
     }
     updateList(){
         $(".objectDeleteButton").off()
         var me = this
         var container = document.createElement("div")
         this.placedObjects.forEach(o=>{
-            console.log(o)
             $(container).append(me.createDiv(o))
         })
         $(".objectList").html(" ")
@@ -192,7 +188,7 @@ export class PlaceModeManager{
                 this.lastCords.set(this.startingCords)
                 this.createPreviewCube()
                 }else{
-                    this.addPlate()
+                    this.addRoom()
                     this.updateList()
                     this.scene.remove(this.previewCube)
                     this.startingCords = new THREE.Vector3()

@@ -4,12 +4,14 @@ import { ConnectionManager } from "connectionManager";
 import { JqueryManager } from "jqueryManager";
 import { SceneStateMachine } from "sceneStateMachine";
 import { PlaceModeManager } from "placeModeManager";
+import { RoomManager } from "roomManager";
 
 export var camera, scene, renderer,datGui,model,lightManager,animator,controls,ground;
 var sceneStateMachine
 var connectionManager
 var jqueryManager 
 var placeModeManager
+var roomManager
 
 
 connectionManager = new ConnectionManager()
@@ -23,6 +25,7 @@ function init() {
     //scene -> 3D raum
     scene = new THREE.Scene();
     lightManager = connectionManager.getManager("light")
+    roomManager = new RoomManager(lightManager,scene)
     
     //licht
     var ambient =  new THREE.AmbientLight(0xFFFFFF,0)   
@@ -45,7 +48,7 @@ function init() {
     scene.add(ground)
     lightManager.render(scene)
     //connect classes
-    placeModeManager = new PlaceModeManager(scene,camera,lightManager)
+    placeModeManager = new PlaceModeManager(scene,camera,lightManager,roomManager)
     sceneStateMachine = new SceneStateMachine(placeModeManager)
     jqueryManager =  new JqueryManager(sceneStateMachine)
     
