@@ -67,5 +67,17 @@ body{
                }
            }
         }
+        
+    }
+    .infoScreenContainer{
+        position: absolute;
+        right:12vw;
+        top: 15px;
+        z-index: 999;
+        height:25vh;
+        width: 10vw;
+        display: flex;
+
+        border: 1px solid green;
     }
 }

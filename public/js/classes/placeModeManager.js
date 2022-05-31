@@ -1,4 +1,5 @@
 import * as THREE from "three"
+import {HoverManager} from "hoverManager"
 
 export class PlaceModeManager{
     constructor(scene,camera,lightManager){

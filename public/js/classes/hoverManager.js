@@ -1,4 +1,4 @@
-class hoverManager{
+export class HoverManager{
     constructor(scene,camera,lightManager){
         this.scene = scene;
         this.camera = camera;

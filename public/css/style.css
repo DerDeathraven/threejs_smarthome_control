@@ -36,9 +36,9 @@ body .changeMode:hover {
 
 body .placeMode {
   position: absolute;
+  z-index: 999;
   right: 20px;
   top: 15px;
-  z-index: 999;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -104,5 +104,18 @@ body .placeMode .objectList .object .objectButtons .objectDeleteButton {
 
 body .placeMode .objectList .object .objectButtons .objectDeleteButton:hover {
   background-color: red;
+}
+
+body .infoScreenContainer {
+  position: absolute;
+  right: 12vw;
+  top: 15px;
+  z-index: 999;
+  height: 25vh;
+  width: 10vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border: 1px solid green;
 }
 /*# sourceMappingURL=style.css.map */
