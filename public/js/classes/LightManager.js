@@ -1,25 +1,21 @@
 import {Light} from 'light'
 
 export class LightManager{
-    constructor(lightJSON) {
-        this.lightJSON = lightJSON
+    constructor(scene) {
         this.lights = [];
         this.findWord = "light"
-        this.fillLights();
         this.idCounter = 0
+        this.scene = scene;
     }
-    fillLights(){
-        this.lightJSON.forEach((light)=>{ 
-            this.lights.push(new Light(this.idCounter++, light.id,light.state,light.color,light.position))
+
+    import(data){
+        data.forEach(d=>{
+            var light = new Light(d.id,d.name,d.state,d.color,d.position)
+            this.lights.push(light)
+            scene.add(light.object)
         })
     }
-    render(object){
-        this.scene = object
-        this.lights.forEach(e=>{
-            object.add(e.object)
-            e.object.position.x = e.position
-        })
-    }
+    
     switchStates(id,state){
         this.lights.find(x=>x.id === id).changeState(state)
     }
@@ -57,5 +53,20 @@ export class LightManager{
             }
         })
         this.lights.splice(pos,1)
+    }
+    export(){
+        var exportArr = []
+        this.lights.forEach((l,i)=>{
+            var newLight = {
+                id:l.id,
+                name:l.name,
+                position:l.position,
+                state:l.state,
+                color:l.color
+
+            }
+            exportArr.push(newLight)
+        })
+        return exportArr
     }
 }

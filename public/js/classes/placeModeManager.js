@@ -48,6 +48,7 @@ export class PlaceModeManager{
             this.mousePosition.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
         })
         $(document).on("mousedown",e=>{
+            
             if(!this.isInDiv && e.button === 0){
                 if(!this.placeLamp){
                     this.placeRoomPreview()
@@ -125,7 +126,7 @@ export class PlaceModeManager{
     }
     addRoom(){
         var roomData = {
-            name: `Room${this.placedRooms.length}`,
+            name: `Room${this.roomManager.idCounter}`,
             position: new THREE.Vector3().copy(this.startingCords),
             scaleX: this.lastCords.x -this.startingCords.x,
             scaleZ: this.lastCords.z - this.startingCords.z
@@ -190,23 +191,26 @@ export class PlaceModeManager{
         
             this.raycaster.setFromCamera( this.mousePosition, this.camera );
             const intersects = this.raycaster.intersectObjects( this.scene.children );
-            if(intersects[0].object.userData.isLamp) return //if true: is one of my lamps so we dont place another one there
-            if(intersects[0].object.userData.isRoom !== true)return
-            var rID= intersects[0].object.userData.id //room ID
+            if(intersects[0].object.userData.isLamp){
+                this.hoverManager.click(intersects)
+            } else{
+                if(intersects[0].object.userData.isRoom !== true)return
+                var rID= intersects[0].object.userData.id //room ID
 
-            const cordX = Math.floor(intersects[0].point.x)
-            const cordZ = Math.floor(intersects[0].point.z)
+                const cordX = Math.floor(intersects[0].point.x)
+                const cordZ = Math.floor(intersects[0].point.z)
 
-            var light = {
-                state: false,
-                color: 0xFFFFFF,
-                position: new THREE.Vector3(cordX,2,cordZ),
-            }
-            var placedLamp = this.lightManager.addLight(light)
-            placedLamp.object.userData.listPlace = this.placedLamps.length
-            this.roomManager.addLightToRoom(rID, placedLamp.id)
-            console.log(this.placedLamps)
-            this.placedLamps.push(placedLamp)
+                var light = {
+                    state: false,
+                    color: 0xFFFFFF,
+                    position: new THREE.Vector3(cordX,2,cordZ),
+                }
+                var placedLamp = this.lightManager.addLight(light)
+                placedLamp.object.userData.listPlace = this.placedLamps.length
+                this.roomManager.addLightToRoom(rID, placedLamp.id)
+                console.log(this.placedLamps)
+                this.placedLamps.push(placedLamp)
+        }
     }
 
 }

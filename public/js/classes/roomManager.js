@@ -1,12 +1,19 @@
 import {Room} from "room"
 
 export class RoomManager{
-    constructor(lightManager,scene,roomJSON = {}) {
+    constructor(lightManager,scene) {
         this.lightManager = lightManager;
         this.scene = scene;
-        this.roomJSON = roomJSON;
         this.rooms = [];
+        this.findWord = "room"
         this.idCounter = 0;
+    }
+    import(data){
+        data.forEach(d=>{
+            var newRoom = new Room(d)
+            this.rooms.push(newRoom);
+            this.scene.add(newRoom.object)
+        })
     }
     addRoom(roomData){
         roomData.id = this.idCounter++;
@@ -36,5 +43,21 @@ export class RoomManager{
             pos = i
         })
         this.rooms.splice(pos,1)
+    }
+    export(){
+        var exportArr = []
+        this.rooms.forEach((r,i)=>{
+            var newRoom = {
+                id:r.id,
+                name:r.name,
+                position:r.position,
+                lights:r.lights,
+                scaleX:r.scaleX,
+                scaleZ:r.scaleZ,
+
+            }
+            exportArr.push(newRoom)
+        })
+        return exportArr
     }
 }

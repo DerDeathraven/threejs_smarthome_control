@@ -5,16 +5,20 @@ import { JqueryManager } from "jqueryManager";
 import { SceneStateMachine } from "sceneStateMachine";
 import { PlaceModeManager } from "placeModeManager";
 import { RoomManager } from "roomManager";
+import { LightManager } from "lightManager";
 
 export var camera, scene, renderer,datGui,model,lightManager,animator,controls,ground;
 var sceneStateMachine
 var connectionManager
 var jqueryManager 
 var placeModeManager
-var roomManager
+var roomManager,
 
 
-connectionManager = new ConnectionManager()
+scene = new THREE.Scene();
+lightManager = new LightManager(scene);
+roomManager = new RoomManager(lightManager,scene)
+connectionManager = new ConnectionManager([lightManager,roomManager]);
 connectionManager.init().then(e=>{
     init()
     requestAnimationFrame(animate)
@@ -23,9 +27,9 @@ connectionManager.init().then(e=>{
 function init() {
     
     //scene -> 3D raum
-    scene = new THREE.Scene();
-    lightManager = connectionManager.getManager("light")
-    roomManager = new RoomManager(lightManager,scene)
+    
+    
+    
     
     //licht
     var ambient =  new THREE.AmbientLight(0xFFFFFF,0)   
@@ -46,12 +50,13 @@ function init() {
     //scene add 
     scene.add(ambient)
     scene.add(ground)
-    lightManager.render(scene)
     //connect classes
     placeModeManager = new PlaceModeManager(scene,camera,lightManager,roomManager)
     sceneStateMachine = new SceneStateMachine(placeModeManager)
     jqueryManager =  new JqueryManager(sceneStateMachine)
-    
+    connectionManager.managers.push(roomManager)
+
+
     //renderer -> die "mach-sichtbar-maschiene"
     renderer = new THREE.WebGLRenderer();
     renderer.setClearColor(0xaaaaaa) //hintergrundfarbe

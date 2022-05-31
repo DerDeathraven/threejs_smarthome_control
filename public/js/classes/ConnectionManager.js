@@ -1,18 +1,22 @@
 import {LightManager} from "lightManager"
 
 export class ConnectionManager{
-    constructor(object){
+    constructor(managers){
         this.socket = io()
-        this.managers = []
+        this.managers = managers
     }
      init() {
         var me = this
-         var ret = new Promise(function(resolve, reject){
-            
-            me.socket.emit("getLights",true,e=>{ 
-                me.managers.push(new LightManager(e))
+         var ret = new Promise(function(resolve, reject){ 
+            me.socket.emit("getSettings",true,e=>{ 
+                Object.keys(e).forEach(k=>{
+                    this.managers.forEach(m=>{
+                        if(m.findWord==k){
+                            m.update(e[k])
+                        }
+                    })
+                })
                 resolve()
-           
             })
          }).then(e=>{
              me.subscribe()
@@ -26,7 +30,6 @@ export class ConnectionManager{
         this.socket.on("update", e=>{
             me.managers.forEach(m=>{
                 if(m.findWord == e.group){
-                    console.log("test")
                     m.switchStates(e.id,e.message)
                 }
             })
@@ -43,5 +46,12 @@ export class ConnectionManager{
         })
         return buff
     }
+    exportSettings(){
+        var exportJSON = {}
 
+        this.managers.forEach(m=>{
+            exportJSON[m.findWord] = m.export()
+        })
+        this.socket.emit("saveSettings", exportJSON)
+    }
 }
