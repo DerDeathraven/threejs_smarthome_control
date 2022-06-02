@@ -18,6 +18,7 @@ export class Light{
         const material = new THREE.MeshBasicMaterial( {color: color} );
         const cube = new THREE.Mesh( geometry, material );
         cube.userData.id = this.id
+        cube.position.copy(this.position)
         cube.userData.isLamp = true;
         cube.userData.isDevice = true;
         

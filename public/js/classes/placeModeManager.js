@@ -2,14 +2,15 @@ import * as THREE from "three"
 import {HoverManager} from "hoverManager"
 
 export class PlaceModeManager{
-    constructor(scene,camera,lightManager,roomManager){
+    constructor(scene,camera,lightManager,roomManager,connectionManager){
 
         //Global Objects
         this.scene = scene;
         this.camera = camera
-        this.lightManager = lightManager
-        this.roomManager = roomManager
-        this.hoverManager = new HoverManager(scene, camera, lightManager)
+        this.lightManager = lightManager //all lights in scene
+        this.roomManager = roomManager // all rooms in scene
+        this.hoverManager = new HoverManager(scene, camera, lightManager) //handle userinputs
+        this.connectionManager = connectionManager // handle connection to server
 
         //Managment Arrays
         this.placeModeObjects = []
@@ -36,10 +37,13 @@ export class PlaceModeManager{
     }
     startPlaceMode(){
         this.setListners()
+        $(".changeModeText").text("Save")
         
     }
     endPlaceMode(){
         this.endListners()
+        $(".changeModeText").text("Place Mode")
+        this.connectionManager.exportSettings()
     }
     setListners(){
         var me = this;
@@ -208,7 +212,7 @@ export class PlaceModeManager{
                 var placedLamp = this.lightManager.addLight(light)
                 placedLamp.object.userData.listPlace = this.placedLamps.length
                 this.roomManager.addLightToRoom(rID, placedLamp.id)
-                console.log(this.placedLamps)
+                this.connectionManager.registerDevice(placedLamp.name)
                 this.placedLamps.push(placedLamp)
         }
     }

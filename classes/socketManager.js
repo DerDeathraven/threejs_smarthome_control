@@ -6,6 +6,8 @@ class SocketManager{
         this.mqttManager = mqttManager;
         this.mqttManager.socketManager = this;
         this.io =  socketio(server)
+
+        var me = this;
         this.io.on("connection",socket=>{
             console.log("connection established")
         
@@ -15,10 +17,14 @@ class SocketManager{
             socket.on("saveSettings",settings=>{
                 filesystemManager.saveSettings(settings)
             })
+            socket.on("newDevice",deviceID=>{
+                me.mqttManager.registerDevice(deviceID)
+            })
         })
     }
     sendUpdate(group,id,message){
         this.io.emit("update",{group,id,message})
     }
+
 }
 module.exports = SocketManager;

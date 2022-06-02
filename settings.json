@@ -1,0 +1,21 @@
+{
+  "light": [
+    {
+      "id": 0,
+      "name": "light-0",
+      "position": { "isVector3": true, "x": -3, "y": 2, "z": -1 },
+      "state": false,
+      "color": 16777215
+    }
+  ],
+  "room": [
+    {
+      "id": 0,
+      "name": "Room0",
+      "position": { "isVector3": true, "x": -6, "y": 0, "z": -5 },
+      "lights": [0],
+      "scaleX": 7,
+      "scaleZ": 7
+    }
+  ]
+}

@@ -9,6 +9,7 @@ const MqttManager = require("./classes/mqttManger")
 const SocketManager = require("./classes/socketManager")
 
 
+
 //Node inits
 const app = express();
 const server = app.listen(3000, () => { console.log("server started on port 3000"); });

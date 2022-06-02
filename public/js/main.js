@@ -51,7 +51,7 @@ function init() {
     scene.add(ambient)
     scene.add(ground)
     //connect classes
-    placeModeManager = new PlaceModeManager(scene,camera,lightManager,roomManager)
+    placeModeManager = new PlaceModeManager(scene,camera,lightManager,roomManager,connectionManager)
     sceneStateMachine = new SceneStateMachine(placeModeManager)
     jqueryManager =  new JqueryManager(sceneStateMachine)
     connectionManager.managers.push(roomManager)

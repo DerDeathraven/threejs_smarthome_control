@@ -13,5 +13,15 @@ class FileSystemManager{
         var settings = JSON.parse(rawSettings);
         return settings;
     }
+    static getLights(){
+        try{
+            var rawSettings = fs.readFileSync("settings.json")
+        } catch(err){
+            var rawSettings = "{}"
+        }
+        var sett = rawSettings.toString()
+        var settings = JSON.parse(sett);
+        return settings.light;
+    }
 }
 module.exports = FileSystemManager;

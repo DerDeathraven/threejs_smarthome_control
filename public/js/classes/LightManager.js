@@ -9,15 +9,16 @@ export class LightManager{
     }
 
     import(data){
+        var  me = this
         data.forEach(d=>{
             var light = new Light(d.id,d.name,d.state,d.color,d.position)
             this.lights.push(light)
-            scene.add(light.object)
+            me.scene.add(light.object)
         })
     }
     
     switchStates(id,state){
-        this.lights.find(x=>x.id === id).changeState(state)
+        this.lights.find(x=>x.name === id).changeState(state)
     }
     getIDs(){
         var buff = []
@@ -37,7 +38,7 @@ export class LightManager{
     }
     addLight(light){
         var id = this.idCounter++
-        light.name = light.name || `light#${id}`
+        light.name = light.name || `light-${id}`
         var newLight = new Light(id,light.name,light.state,light.color,light.position)
         this.lights.push(newLight)
         this.scene.add(newLight.object)

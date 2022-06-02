@@ -10,9 +10,10 @@ export class ConnectionManager{
          var ret = new Promise(function(resolve, reject){ 
             me.socket.emit("getSettings",true,e=>{ 
                 Object.keys(e).forEach(k=>{
-                    this.managers.forEach(m=>{
+                    me.managers.forEach(m=>{
                         if(m.findWord==k){
-                            m.update(e[k])
+                            console.log(m)
+                            m.import(e[k])
                         }
                     })
                 })
@@ -28,6 +29,7 @@ export class ConnectionManager{
     subscribe() {
         var me = this;
         this.socket.on("update", e=>{
+
             me.managers.forEach(m=>{
                 if(m.findWord == e.group){
                     m.switchStates(e.id,e.message)
@@ -53,5 +55,9 @@ export class ConnectionManager{
             exportJSON[m.findWord] = m.export()
         })
         this.socket.emit("saveSettings", exportJSON)
+    }
+    registerDevice(deviceID){
+        console.log(deviceID)
+        this.socket.emit("newDevice", deviceID)
     }
 }

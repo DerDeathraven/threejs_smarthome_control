@@ -1,6 +1,11 @@
 import * as THREE from "three"
 
+
 export class Room{
+    /**
+     * Wrapper für Three.js Object
+     * @param {Object} roomData 
+     */
     constructor(roomData){
         this.id = roomData.id;
         this.name = roomData.name;
@@ -10,6 +15,11 @@ export class Room{
         this.scaleZ = roomData.scaleZ
         this.object = this.createObject();
     }
+
+    /**
+     *  
+     * @returns {THREE.Object}
+     */
     createObject(){
         const geometry = new THREE.BoxGeometry( 1, 1, 1 );
         geometry.translate( 0.5, 0.5, 0.5 );
