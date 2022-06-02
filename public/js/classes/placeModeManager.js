@@ -13,8 +13,6 @@ export class PlaceModeManager{
         this.connectionManager = connectionManager // handle connection to server
 
         //Managment Arrays
-        this.placeModeObjects = []
-        this.placedObjects = []
         this.placedRooms = []
         this.placedLamps = []
 
@@ -31,9 +29,16 @@ export class PlaceModeManager{
         //reusable raycaster
         this.raycaster = new THREE.Raycaster();
 
-        
+        //
+        this.updateList()
+        this.init()
 
-
+    }
+    init() {
+        $(document).on('mousemove',e=>{
+            this.mousePosition.x = ( e.clientX / window.innerWidth ) * 2 - 1;
+            this.mousePosition.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
+        })
     }
     startPlaceMode(){
         this.setListners()
@@ -47,10 +52,7 @@ export class PlaceModeManager{
     }
     setListners(){
         var me = this;
-        $(document).on('mousemove',e=>{
-            this.mousePosition.x = ( e.clientX / window.innerWidth ) * 2 - 1;
-            this.mousePosition.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
-        })
+       
         $(document).on("mousedown",e=>{
             
             if(!this.isInDiv && e.button === 0){
@@ -82,7 +84,6 @@ export class PlaceModeManager{
         })
     }
     endListners(){
-        $(document).off("mousemove")
         $(document).off("mousedown")
         $(".placeMode").off()
         this.placing = false
@@ -92,7 +93,7 @@ export class PlaceModeManager{
         
         var intersects = this.raycaster.intersectObjects( this.scene.children );
         this.hoverManager.update(intersects)
-       if(this.placing){
+       if(this.placing ){
         if(intersects[0].userData){
             intersects = intersects[1]
         }else{

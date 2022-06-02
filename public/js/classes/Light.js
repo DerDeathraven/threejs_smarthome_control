@@ -31,6 +31,5 @@ export class Light{
         }else{
             this.object.material.color.setHex(0xFFA500) ;
         }
-        this.state = !this.state
     }
 }

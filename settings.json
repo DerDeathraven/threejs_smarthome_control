@@ -3,8 +3,8 @@
     {
       "id": 0,
       "name": "light-0",
-      "position": { "isVector3": true, "x": -3, "y": 2, "z": -1 },
-      "state": false,
+      "position": { "isVector3": true, "x": -5, "y": 2, "z": 1 },
+      "state": "true",
       "color": 16777215
     }
   ],
@@ -12,10 +12,10 @@
     {
       "id": 0,
       "name": "Room0",
-      "position": { "isVector3": true, "x": -6, "y": 0, "z": -5 },
+      "position": { "isVector3": true, "x": -8, "y": 0, "z": -8 },
       "lights": [0],
-      "scaleX": 7,
-      "scaleZ": 7
+      "scaleX": 8,
+      "scaleZ": 20
     }
   ]
 }

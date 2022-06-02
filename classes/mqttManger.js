@@ -5,20 +5,15 @@ const filesystemManager = require("./fileSystemManager")
 class MqttManager{
     constructor(){
         this.client = mqtt.connect("mqtt://localhost:1883")
-
+        this.lights = filesystemManager.getLights()
         this.client.on("connect",e=>{
-            console.log("Connected")
+            console.log("Connected to MQTT")
         })
-        this.init()
+        this.subscribe()
+        this.handleMessages()
         
     }
-    init(){
-        filesystemManager.getLights().forEach(e=>{
-            console.log(e)
-            this.client.subscribe(`light/${e.name}`)
-        })
-        this.handleMessages()
-    }
+
     subscribe(){
         var me = this
         this.lights.forEach(e=>{

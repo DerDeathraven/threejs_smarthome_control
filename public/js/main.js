@@ -25,12 +25,6 @@ connectionManager.init().then(e=>{
 })
 
 function init() {
-    
-    //scene -> 3D raum
-    
-    
-    
-    
     //licht
     var ambient =  new THREE.AmbientLight(0xFFFFFF,0)   
     //camera
@@ -81,9 +75,9 @@ function animate(){
         jqueryManager.updateHud()
        
     }
-    if(sceneStateMachine.isPlaceMode){
-        placeModeManager.update(camera)
-    }
+    placeModeManager.update(camera)
+    
+
   
     controls.update();
 	renderer.render( scene, camera );

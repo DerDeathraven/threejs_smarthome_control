@@ -7,17 +7,20 @@ export class HoverManager{
 
     }
     update(intersects){
-        if(this.editMode == false){
-            if(intersects[0].object.userData.isDevice){
-                $(".infoScreenContainer").show()
-                var id = intersects[0].object.userData.id;
-                var light = this.lightManager.getLightbyID(id)
-
-                this.updateScreen(light);
-            }else{
-                $(".infoScreenContainer").hide()
+        if(intersects.length > 0){
+            if(this.editMode == false){
+                if(intersects[0].object.userData.isDevice){
+                    $(".infoScreenContainer").show()
+                    var id = intersects[0].object.userData.id;
+                    var light = this.lightManager.getLightbyID(id)
+    
+                    this.updateScreen(light);
+                }else{
+                    $(".infoScreenContainer").hide()
+                }
             }
         }
+        
     }
     click(intersects){
         if(this.editMode == false)return;

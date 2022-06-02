@@ -10,7 +10,7 @@ export class Room{
         this.id = roomData.id;
         this.name = roomData.name;
         this.position = roomData.position;
-        this.lights  = []
+        this.lights  = roomData.lights || [];
         this.scaleX = roomData.scaleX
         this.scaleZ = roomData.scaleZ
         this.object = this.createObject();

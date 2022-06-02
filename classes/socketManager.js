@@ -9,7 +9,7 @@ class SocketManager{
 
         var me = this;
         this.io.on("connection",socket=>{
-            console.log("connection established")
+            console.log("Connected to Client")
         
             socket.on("getSettings",(e,callback)=>{
                 callback(filesystemManager.getSettings())
