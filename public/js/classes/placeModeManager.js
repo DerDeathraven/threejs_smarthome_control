@@ -61,7 +61,7 @@ export class PlaceModeManager{
                 }else{
                     this.placeLampHere()
                 }
-
+            this.updateList()
         }
         })
         $(".menuItem").on("mouseenter",e=>{
@@ -139,13 +139,14 @@ export class PlaceModeManager{
         this.roomManager.addRoom(roomData)
     
     }
+
+    /**
+     * Update the list of rooms in the corner
+     */
     updateList(){
         $(".objectDeleteButton").off()
         var me = this
-        var container = document.createElement("div")
-        this.roomManager.rooms.forEach(r=>{
-            $(container).append(me.createDiv(r))
-        })
+        var container = this.roomManager.createDomElement()
         $(".objectList").html(" ")
         $(".objectList").append(container)
         $(".objectDeleteButton").on("click",e=>{
@@ -153,27 +154,6 @@ export class PlaceModeManager{
             me.roomManager.deleteRoom(id)
             me.updateList()
         })
-    }
-    createDiv(o){
-        var container = document.createElement("div")
-        var name = document.createElement("div")
-        var button = document.createElement("div")
-
-        //name content
-        $(name).text(o.name).addClass("objectName")
-        
-        
-        //button content
-        var deleteButton = document.createElement("div")
-        $(deleteButton).addClass("objectDeleteButton").text("X").data("id",o.id)
-        $(button).append(deleteButton).addClass("objectButtons")
-        //container append 
-
-        $(container).append(name).append(button).addClass("object")
-
-        return container
-
-
     }
     placeRoomPreview(){
         this.placing = !this.placing

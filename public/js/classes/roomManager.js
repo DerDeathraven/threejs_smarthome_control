@@ -7,12 +7,15 @@ export class RoomManager{
         this.rooms = [];
         this.findWord = "room"
         this.idCounter = 0;
+        this.domElement = this.createDomElement()
     }
     import(data){
+        var me = this
         data.forEach(d=>{
             var newRoom = new Room(d)
             this.rooms.push(newRoom);
             this.scene.add(newRoom.object)
+            me.idCounter++;
         })
     }
     addRoom(roomData){
@@ -59,5 +62,17 @@ export class RoomManager{
             exportArr.push(newRoom)
         })
         return exportArr
+    }
+    createDomElement(){
+        var me = this
+        var container = document.createElement("div")
+        this.rooms.forEach(r=>{
+            var lights = []
+            r.lights.forEach(l=>{
+                lights.push(me.lightManager.getLightbyID(l))
+            })
+            $(container).append(r.createDomElement(lights))
+        })
+        return container
     }
 }

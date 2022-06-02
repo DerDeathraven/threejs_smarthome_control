@@ -12,8 +12,9 @@ export class LightManager{
         var  me = this
         data.forEach(d=>{
             var light = new Light(d.id,d.name,d.state,d.color,d.position)
-            this.lights.push(light)
+            me.lights.push(light)
             me.scene.add(light.object)
+            me.idCounter++;
         })
     }
     
@@ -29,11 +30,14 @@ export class LightManager{
     }
     getLightbyID(id){
         var buff
+        
         this.lights.forEach(e=>{
             if(e.id === id){
                 buff = e
             }
         })
+        console.log(this.lights)
+        
         return buff
     }
     addLight(light){

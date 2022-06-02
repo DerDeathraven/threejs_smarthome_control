@@ -32,4 +32,31 @@ export class Room{
         cube.scale.z = this.scaleZ
         return cube;
     }
+    createDomElement(lightsList){
+        var container = document.createElement("div")
+        var name = document.createElement("div")
+        var dataContainer = document.createElement("div")
+        var button = document.createElement("div")
+        var lights = document.createElement("div")
+
+        lightsList.forEach(f=>{
+            $(lights).append(f.domElement)
+        })
+        
+        //display the name
+        $(name).text(this.name).addClass("objectName")
+        
+        
+        //display the deleteButton
+        var deleteButton = document.createElement("div")
+        $(deleteButton).addClass("objectDeleteButton").text("X").data("id",this.id)
+        $(button).append(deleteButton).addClass("objectButtons")
+        //container append 
+
+        $(dataContainer).append(name).append(button)
+        $(container).append(dataContainer).append(lights)
+
+        return container
+
+    }
 }

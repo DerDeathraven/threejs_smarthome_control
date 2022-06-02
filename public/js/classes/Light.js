@@ -10,6 +10,7 @@ export class Light{
         this.color = color;
         this.position = position;
         this.object = this.generateObject();
+        this.domElement = this.createDomElement()
 
     }
     generateObject(){
@@ -23,6 +24,25 @@ export class Light{
         cube.userData.isDevice = true;
         
         return cube;
+    }
+    createDomElement(){
+        var container = document.createElement("div")
+        var name = document.createElement("div")
+        var button = document.createElement("div")
+
+        //name content
+        $(name).text(this.name).addClass("deviceName")
+        
+        
+        //button content
+        var deleteButton = document.createElement("div")
+        $(deleteButton).addClass("deviceDeleteButton").text("X").data("id",this.id)
+        $(button).append(deleteButton).addClass("deviceButtons")
+        //container append 
+
+        $(container).append(name).append(button).addClass("device")
+        return container
+        
     }
     changeState(state){
         this.state = state;
