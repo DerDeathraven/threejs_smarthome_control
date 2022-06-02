@@ -17,22 +17,22 @@ class MqttManager{
     subscribe(){
         var me = this
         this.lights.forEach(e=>{
-            me.client.subscribe(`light/${e.id}`)
+            me.client.subscribe(`light/${e.name}`)
         })
     }
     unsubscribe(){
         var me = this
         this.lights.forEach(e=>{
-            me.client.unsubscribe(`light/${e.id}`)
+            me.client.unsubscribe(`light/${e.name}`)
         })
     }
     resubscribe(){
         var me = this
         this.lights.forEach(e=>{
-            me.client.unsubscribe(`light/${e.id}`)
+            me.client.unsubscribe(`light/${e.name}`)
         })
         this.lights.forEach(e=>{
-            me.client.subscribe(`light/${e.id}`)
+            me.client.subscribe(`light/${e.name}`)
         })
     }
     handleMessages(){
