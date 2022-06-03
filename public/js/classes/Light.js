@@ -16,7 +16,7 @@ export class Light{
     generateObject(){
         const color = this.state ? 0xFFA500 : 0x808080;
         const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-        const material = new THREE.MeshBasicMaterial( {color: color} );
+        const material = new THREE.MeshBasicMaterial( {color: color,transparent: true} );
         const cube = new THREE.Mesh( geometry, material );
         cube.userData.id = this.id
         cube.position.copy(this.position)

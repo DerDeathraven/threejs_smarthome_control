@@ -12,6 +12,7 @@ export class HoverManager{
         if(intersects.length > 0){
                 this.renderScreen(intersects)
                 this.highlightRoom(intersects)  
+                this.highlightLamp(intersects)
             }
         
         
@@ -25,6 +26,10 @@ export class HoverManager{
         this.updateScreen(light);
         
     }
+    /**
+     * 
+     * @todo add general hover function 
+     */
     highlightRoom(intersects){
         if(intersects[0].object.userData.isRoom == true && this.oldRoom.uuid != intersects[0].object.uuid){
         console.log(this.oldRoom)
@@ -41,6 +46,26 @@ export class HoverManager{
         }
         this.oldRoom = intersects[0].object
     }
+    
+    }
+    highlightLamp(intersects){
+        if(intersects[0].object.userData.isDevice != true){
+            if(this.oldDevice != undefined){
+                this.oldDevice.material.opacity = 1;
+            }
+        }else{
+           
+            if(this.oldDevice == undefined){
+                this.oldDevice = intersects[0].object
+            }
+            if(this.oldDevice.uuid != intersects[0].object.uuid || intersects[0].object.material.opacity == 1){
+                this.oldDevice.material.opacity = 1;
+                intersects[0].object.material.opacity = 0.8
+                this.oldDevice = intersects[0].object
+            }
+            
+        }
+       
     }
     click(intersects){
         if(this.editMode == false)return;
