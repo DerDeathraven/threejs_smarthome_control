@@ -42,19 +42,19 @@ export class Room{
         lightsList.forEach(f=>{
             $(lights).append(f.domElement)
         })
-        
+        $(lights).addClass("devices")
         //display the name
-        $(name).text(this.name).addClass("objectName")
+        $(name).text(this.name).addClass("roomName")
         
         
         //display the deleteButton
         var deleteButton = document.createElement("div")
-        $(deleteButton).addClass("objectDeleteButton").text("X").data("id",this.id)
-        $(button).append(deleteButton).addClass("objectButtons")
+        $(deleteButton).addClass("roomDeleteButton").text("X").data("id",this.id)
+        $(button).append(deleteButton).addClass("roomButtons")
         //container append 
 
-        $(dataContainer).append(name).append(button)
-        $(container).append(dataContainer).append(lights)
+        $(dataContainer).append(name).append(button).addClass("roomHeader")
+        $(container).append(dataContainer).append(lights).attr("id",this.name).addClass("room")
 
         return container
 

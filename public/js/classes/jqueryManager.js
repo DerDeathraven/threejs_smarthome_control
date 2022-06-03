@@ -1,6 +1,6 @@
 export class JqueryManager{
     constructor(ssm){
-        this.ssm = ssm;
+        this.ssm = ssm; //scene state machine
         this.setBasicTriggers();
         this.updateHud()
     }

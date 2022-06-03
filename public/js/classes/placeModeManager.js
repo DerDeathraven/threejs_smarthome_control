@@ -2,7 +2,7 @@ import * as THREE from "three"
 import {HoverManager} from "hoverManager"
 
 export class PlaceModeManager{
-    constructor(scene,camera,lightManager,roomManager,connectionManager){
+    constructor(scene,camera,lightManager,roomManager,connectionManager,userInputManager){
 
         //Global Objects
         this.scene = scene;
@@ -11,6 +11,7 @@ export class PlaceModeManager{
         this.roomManager = roomManager // all rooms in scene
         this.hoverManager = new HoverManager(scene, camera, lightManager) //handle userinputs
         this.connectionManager = connectionManager // handle connection to server
+        this.userInputManager = userInputManager // handle user input
 
         //Managment Arrays
         this.placedRooms = []
@@ -22,7 +23,6 @@ export class PlaceModeManager{
         this.isInDiv = false
 
         //various vectors
-        this.mousePosition = new THREE.Vector2(); //Postion of cursor
         this.startingCords = new THREE.Vector3(0,0,0)//starting cords of the room
         this.lastCords = new THREE.Vector3(); //last know cords of the room
 
@@ -31,14 +31,8 @@ export class PlaceModeManager{
 
         //
         this.updateList()
-        this.init()
 
-    }
-    init() {
-        $(document).on('mousemove',e=>{
-            this.mousePosition.x = ( e.clientX / window.innerWidth ) * 2 - 1;
-            this.mousePosition.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
-        })
+    
     }
     startPlaceMode(){
         this.setListners()
@@ -50,20 +44,19 @@ export class PlaceModeManager{
         $(".changeModeText").text("Place Mode")
         this.connectionManager.exportSettings()
     }
-    setListners(){
-        var me = this;
-       
-        $(document).on("mousedown",e=>{
-            
-            if(!this.isInDiv && e.button === 0){
-                if(!this.placeLamp){
-                    this.placeRoomPreview()
-                }else{
-                    this.placeLampHere()
-                }
+    leftClick(e){
+        if(!this.isInDiv && e.button === 0){
+            if(!this.placeLamp){
+                this.placeRoomPreview()
+            }else{
+                this.placeLampHere()
+            }
             this.updateList()
         }
-        })
+    }
+    setListners(){
+        var me = this;
+        this.userInputManager.addClick("left",this)
         $(".menuItem").on("mouseenter",e=>{
             this.isInDiv = true
         })
@@ -84,12 +77,12 @@ export class PlaceModeManager{
         })
     }
     endListners(){
-        $(document).off("mousedown")
+        this.userInputManager.removeClick("left",this)
         $(".placeMode").off()
         this.placing = false
     }
     update(){
-        this.raycaster.setFromCamera( this.mousePosition, this.camera );
+        this.raycaster.setFromCamera( this.userInputManager.mousePosition, this.camera );
         
         var intersects = this.raycaster.intersectObjects( this.scene.children );
         this.hoverManager.update(intersects)
@@ -144,12 +137,12 @@ export class PlaceModeManager{
      * Update the list of rooms in the corner
      */
     updateList(){
-        $(".objectDeleteButton").off()
+        $(".roomDeleteButton").off()
         var me = this
         var container = this.roomManager.createDomElement()
         $(".objectList").html(" ")
         $(".objectList").append(container)
-        $(".objectDeleteButton").on("click",e=>{
+        $(".roomDeleteButton").on("click",e=>{
             var id = $(e.target).data("id")
             me.roomManager.deleteRoom(id)
             me.updateList()
@@ -158,7 +151,7 @@ export class PlaceModeManager{
     placeRoomPreview(){
         this.placing = !this.placing
                 if(this.placing){
-                this.raycaster.setFromCamera( this.mousePosition, this.camera );
+                this.raycaster.setFromCamera( this.userInputManager.mousePosition, this.camera );
                 const intersects = this.raycaster.intersectObjects( this.scene.children )[0];
                 this.startingCords.z = Math.floor(intersects.point.z)
                 this.startingCords.x = Math.floor(intersects.point.x)
@@ -174,13 +167,13 @@ export class PlaceModeManager{
     }
     placeLampHere(){
         
-            this.raycaster.setFromCamera( this.mousePosition, this.camera );
+            this.raycaster.setFromCamera( this.userInputManager.mousePosition, this.camera );
             const intersects = this.raycaster.intersectObjects( this.scene.children );
             if(intersects[0].object.userData.isLamp){
                 this.hoverManager.click(intersects)
             } else{
                 if(intersects[0].object.userData.isRoom !== true)return
-                var rID= intersects[0].object.userData.id //room ID
+                var rID = intersects[0].object.userData.id //room ID
 
                 const cordX = Math.floor(intersects[0].point.x)
                 const cordZ = Math.floor(intersects[0].point.z)

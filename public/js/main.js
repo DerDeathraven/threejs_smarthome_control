@@ -6,19 +6,26 @@ import { SceneStateMachine } from "sceneStateMachine";
 import { PlaceModeManager } from "placeModeManager";
 import { RoomManager } from "roomManager";
 import { LightManager } from "lightManager";
+import { UserInputManager } from "userInputManager";
 
-export var camera, scene, renderer,datGui,model,lightManager,animator,controls,ground;
+
+var camera,renderer,controls,ground;
+
+
 var sceneStateMachine
-var connectionManager
 var jqueryManager 
 var placeModeManager
-var roomManager,
 
 
-scene = new THREE.Scene();
-lightManager = new LightManager(scene);
-roomManager = new RoomManager(lightManager,scene)
-connectionManager = new ConnectionManager([lightManager,roomManager]);
+var scene = new THREE.Scene();
+var userInputManager = new UserInputManager()
+var lightManager = new LightManager(scene);
+var roomManager = new RoomManager(lightManager,scene)
+var connectionManager = new ConnectionManager([lightManager,roomManager]);
+
+
+
+
 connectionManager.init().then(e=>{
     init()
     requestAnimationFrame(animate)
@@ -45,7 +52,7 @@ function init() {
     scene.add(ambient)
     scene.add(ground)
     //connect classes
-    placeModeManager = new PlaceModeManager(scene,camera,lightManager,roomManager,connectionManager)
+    placeModeManager = new PlaceModeManager(scene,camera,lightManager,roomManager,connectionManager,userInputManager)
     sceneStateMachine = new SceneStateMachine(placeModeManager)
     jqueryManager =  new JqueryManager(sceneStateMachine)
     connectionManager.managers.push(roomManager)

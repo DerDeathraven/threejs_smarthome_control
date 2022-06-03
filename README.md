@@ -17,3 +17,9 @@ This Nodejs Application uses my Smarthome data to build a 3D environment using T
 
 - JQuery
 - Three.js
+
+## Future Features
+
+- More devices -> Telefones, Motion Sensors ,etc
+- expand the room by clicking on it
+- turn all devices in a room off

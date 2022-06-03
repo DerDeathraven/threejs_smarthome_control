@@ -77,7 +77,27 @@ body .placeMode .placeModeText div:hover {
   color: white;
 }
 
-body .placeMode .objectList .object {
+body .placeMode .objectList .rooms {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+body .placeMode .objectList .rooms .room {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+body .placeMode .objectList .rooms .room .roomHeader {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -90,20 +110,27 @@ body .placeMode .objectList .object {
           justify-content: space-between;
 }
 
-body .placeMode .objectList .object .objectButtons {
-  margin-right: 5px;
+body .placeMode .objectList .rooms .room .devices {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
-body .placeMode .objectList .object .objectButtons .objectDeleteButton {
-  width: 10px;
-  aspect-ratio: 1/1;
-  border: 1px solid red;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
-}
-
-body .placeMode .objectList .object .objectButtons .objectDeleteButton:hover {
-  background-color: red;
+body .placeMode .objectList .rooms .room .devices .device {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 body .infoScreenContainer {

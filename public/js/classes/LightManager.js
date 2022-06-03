@@ -11,10 +11,10 @@ export class LightManager{
     import(data){
         var  me = this
         data.forEach(d=>{
+            d.id = me.idCounter++
             var light = new Light(d.id,d.name,d.state,d.color,d.position)
             me.lights.push(light)
             me.scene.add(light.object)
-            me.idCounter++;
         })
     }
     
@@ -36,7 +36,7 @@ export class LightManager{
                 buff = e
             }
         })
-        console.log(this.lights)
+
         
         return buff
     }

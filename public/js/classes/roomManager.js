@@ -12,10 +12,11 @@ export class RoomManager{
     import(data){
         var me = this
         data.forEach(d=>{
+            d.id = me.idCounter++
             var newRoom = new Room(d)
             this.rooms.push(newRoom);
             this.scene.add(newRoom.object)
-            me.idCounter++;
+           
         })
     }
     addRoom(roomData){
@@ -40,11 +41,13 @@ export class RoomManager{
                 r.lights.forEach(l=>{
                     me.lightManager.deleteLight(l)
                 })
+                me.scene.remove(r.object)
+                pos = i
                
             }
-            me.scene.remove(r.object)
-            pos = i
+            
         })
+
         this.rooms.splice(pos,1)
     }
     export(){
@@ -66,6 +69,7 @@ export class RoomManager{
     createDomElement(){
         var me = this
         var container = document.createElement("div")
+        $(container).addClass("rooms")
         this.rooms.forEach(r=>{
             var lights = []
             r.lights.forEach(l=>{

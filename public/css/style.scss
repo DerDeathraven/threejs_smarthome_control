@@ -48,20 +48,24 @@ body{
             
         }
         .objectList{
-           .object{
+           .rooms{
                display: flex;
-               flex-direction: row;
-               justify-content: space-between;
-               .objectButtons{
-                   margin-right: 5px;
-                   .objectDeleteButton{
-                       width: 10px;
-                       aspect-ratio: 1/1;
-                       border: 1px solid red;
-                       transition: all 0.2s;
-                       &:hover{
-                           background-color:red;
-
+               flex-direction: column;
+               .room{
+                   display: flex;
+                   flex-direction: column;
+                   .roomHeader{
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                   }
+                   .devices{
+                       display: flex;
+                       flex-direction: column;
+                       .device{
+                           display: flex;
+                           flex-direction: row;
+                           justify-content: space-between;
                        }
                    }
                }
