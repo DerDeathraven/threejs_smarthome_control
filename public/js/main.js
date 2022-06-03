@@ -7,6 +7,7 @@ import { PlaceModeManager } from "placeModeManager";
 import { RoomManager } from "roomManager";
 import { LightManager } from "lightManager";
 import { UserInputManager } from "userInputManager";
+import { DeviceToggleManager } from "deviceToggleManager";
 
 
 var camera,renderer,controls,ground;
@@ -15,7 +16,7 @@ var camera,renderer,controls,ground;
 var sceneStateMachine
 var jqueryManager 
 var placeModeManager
-
+var deviceToggleManager
 
 var scene = new THREE.Scene();
 var userInputManager = new UserInputManager()
@@ -53,7 +54,8 @@ function init() {
     scene.add(ground)
     //connect classes
     placeModeManager = new PlaceModeManager(scene,camera,lightManager,roomManager,connectionManager,userInputManager)
-    sceneStateMachine = new SceneStateMachine(placeModeManager)
+    deviceToggleManager = new DeviceToggleManager(scene,camera,userInputManager,connectionManager)
+    sceneStateMachine = new SceneStateMachine(placeModeManager,deviceToggleManager)
     jqueryManager =  new JqueryManager(sceneStateMachine)
     connectionManager.managers.push(roomManager)
 

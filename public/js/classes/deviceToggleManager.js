@@ -1,11 +1,15 @@
-class DeviceToggleManager{
-    constructor(scene,camera,lightManager){
+import * as THREE from "three"
+
+
+export class DeviceToggleManager{
+    constructor(scene,camera,userInputManager,connectionManager){
         this.scene = scene;
         this.camera = camera;
 
 
-        this.lightManager = lightManager;
-        this.userDataManager = userDataManager;
+        //managers to comunicate
+        this.connectionManager = connectionManager;
+        this.userInputManager = userInputManager;
 
         this.observe = false
         this.raycaster = new THREE.Raycaster();
@@ -14,13 +18,22 @@ class DeviceToggleManager{
 
     startOverwatch(){
         this.observe = true;
+        this.userInputManager.addClick("left",this)
     }
     endOverwatch(){
         this.observe = false;
+        this.userInputManager.removeClick("left",this)
 
     }
-    click(e){
-        
+    leftClick(e){
+        this.raycaster.setFromCamera( this.userInputManager.mousePosition, this.camera );
+        var intersects = this.raycaster.intersectObjects( this.scene.children );
+        if(intersects.length > 0){
+            if(intersects[0].object.userData.isDevice){
+              this.connectionManager.switchStateOfDevice(intersects[0].object.userData.id)
+            }
+        }
+
     }
 
 

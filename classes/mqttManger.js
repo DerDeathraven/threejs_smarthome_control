@@ -39,7 +39,7 @@ class MqttManager{
         this.client.on("message",(t,m)=>{
             if(t.includes("/")){
             m = JSON.parse(m.toString())
-            console.log(m)
+
             var splitedArr = t.split("/")
 
             this.socketManager.sendUpdate(splitedArr[0], splitedArr[1],m)
@@ -50,6 +50,10 @@ class MqttManager{
         var device = {id:deviceID}
         this.lights.push(device)
         this.resubscribe()
+    }
+    switchStateOfDevice(deviceID){
+        this.client.publish(`switch/${deviceID}`)
+        console.log(`Switching ${deviceID}`)
     }
 }
 module.exports = MqttManager

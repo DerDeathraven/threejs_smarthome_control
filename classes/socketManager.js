@@ -20,6 +20,9 @@ class SocketManager{
             socket.on("newDevice",deviceID=>{
                 me.mqttManager.registerDevice(deviceID)
             })
+            socket.on("switchStateOfDevice",deviceID=>{
+                me.mqttManager.switchStateOfDevice(deviceID)
+            })
         })
     }
     sendUpdate(group,id,message){

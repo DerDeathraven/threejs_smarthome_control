@@ -22,17 +22,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'))
 
 app.get("/", (req, res) => {
-	
 	res.sendFile(path.resolve(public + '/index.html'));
-
-
-
-
 });
-app.get("/ping", (req, res) =>{
-    io.emit("light_küche",true)
-    res.send("true")
-})
+
 //My modules
 
 const mqttManger = new MqttManager()

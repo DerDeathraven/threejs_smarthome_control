@@ -1,10 +1,19 @@
-import {LightManager} from "lightManager"
+
 
 export class ConnectionManager{
+    /**
+     * Handle the comunication between the server and the  client
+     * @param {Array} managers Array of ObjectManagers 
+     */
     constructor(managers){
         this.socket = io()
         this.managers = managers
     }
+
+    /**
+     * Import settings for all Managers
+     * @returns {Promise} Promise of importing Settings
+     */
      init() {
         var me = this
          var ret = new Promise(function(resolve, reject){ 
@@ -26,6 +35,9 @@ export class ConnectionManager{
          return ret
        
     }
+    /**
+     * Initate Listners to switch states of Objects 
+     */
     subscribe() {
         var me = this;
         this.socket.on("update", e=>{
@@ -37,6 +49,11 @@ export class ConnectionManager{
             })
         })
     }
+    /**
+     * Get Manager out of the Array
+     * @param {String} findWord 
+     * @returns Manager
+     */
     getManager(findWord) {
         var buff
         this.managers.forEach(m=>{
@@ -48,6 +65,9 @@ export class ConnectionManager{
         })
         return buff
     }
+    /**
+     * Build the export json file
+     */
     exportSettings(){
         var exportJSON = {}
 
@@ -56,8 +76,21 @@ export class ConnectionManager{
         })
         this.socket.emit("saveSettings", exportJSON)
     }
+    /**
+     * When the user adds a new Device. set up listner for this one
+     * @param {String} deviceID 
+     */
     registerDevice(deviceID){
         console.log(deviceID)
         this.socket.emit("newDevice", deviceID)
+    }
+
+    /**
+     * Send request to server to switch the state of a lamp
+     * @param {String} deviceID ID of Device
+     */
+    switchStateOfDevice(deviceID){
+        this.socket.emit("switchStateOfDevice", deviceID)
+        
     }
 }
