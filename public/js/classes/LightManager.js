@@ -74,4 +74,10 @@ export class LightManager{
         })
         return exportArr
     }
+    setInteractionManager(interactionManager) {
+        this.interactionManager = interactionManager
+        this.lights.forEach(e=>{
+            this.interactionManager.add("hover",e)
+        })
+    }
 }

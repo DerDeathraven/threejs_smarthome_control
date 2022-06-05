@@ -52,4 +52,10 @@ export class Light{
             this.object.material.color.setHex(0xFFA500) ;
         }
     }
+    mouseEnter(){
+        this.object.material.opacity = 0.8
+    }
+    mouseLeave(){
+        this.object.material.opacity = 1
+    }
 }

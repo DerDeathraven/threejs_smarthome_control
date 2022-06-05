@@ -8,7 +8,7 @@ import { RoomManager } from "roomManager";
 import { LightManager } from "lightManager";
 import { UserInputManager } from "userInputManager";
 import { DeviceToggleManager } from "deviceToggleManager";
-
+import { InteractionManager } from "interactionManager";
 
 var camera,renderer,controls,ground;
 
@@ -17,6 +17,7 @@ var sceneStateMachine
 var jqueryManager 
 var placeModeManager
 var deviceToggleManager
+var interactionManager
 
 var scene = new THREE.Scene();
 var userInputManager = new UserInputManager()
@@ -53,6 +54,11 @@ function init() {
     scene.add(ambient)
     scene.add(ground)
     //connect classes
+    interactionManager = new InteractionManager(scene,camera,userInputManager)
+
+    lightManager.setInteractionManager(interactionManager)
+    roomManager.setInteractionManager(interactionManager)
+
     placeModeManager = new PlaceModeManager(scene,camera,lightManager,roomManager,connectionManager,userInputManager)
     deviceToggleManager = new DeviceToggleManager(scene,camera,userInputManager,connectionManager)
     sceneStateMachine = new SceneStateMachine(placeModeManager,deviceToggleManager)
@@ -85,7 +91,7 @@ function animate(){
        
     }
     placeModeManager.update(camera)
-    
+    interactionManager.update()
 
   
     controls.update();

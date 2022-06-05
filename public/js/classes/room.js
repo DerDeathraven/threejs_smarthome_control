@@ -16,9 +16,15 @@ export class Room{
         this.object = this.createObject();
     }
 
+    mouseEnter(){
+        this.object.material.color.setHex(0xADD8E6);
+    }
+    mouseLeave(){
+        this.object.material.color.setHex(0xFFDBAC);
+    }
     /**
      *  
-     * @returns {THREE.Object}
+     * @returns {THREE.Object3D}
      */
     createObject(){
         const geometry = new THREE.BoxGeometry( 1, 1, 1 );

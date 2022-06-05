@@ -11,8 +11,6 @@ export class HoverManager{
     update(intersects){
         if(intersects.length > 0){
                 this.renderScreen(intersects)
-                this.highlightRoom(intersects)  
-                this.highlightLamp(intersects)
             }
         
         
@@ -26,55 +24,7 @@ export class HoverManager{
         this.updateScreen(light);
         
     }
-    /**
-     * 
-     * @todo add general hover function 
-     */
-    highlightRoom(intersects){
-        if(intersects[0].object.userData.isRoom == true && this.oldRoom.uuid != intersects[0].object.uuid){
-        console.log(this.oldRoom)
-        var oldColor = intersects[0].object.material.color.getHex()
-        intersects[0].object.userData.oldColor = oldColor
-        intersects[0].object.material.color.setHex(0xADD8E6);
-
-
-        if(Object.keys(this.oldRoom).length !== 0){
-        
-        var oldColor = this.oldRoom.userData.oldColor
-        console.log(oldColor)
-        this.oldRoom.material.color.set(oldColor)
-        }
-        this.oldRoom = intersects[0].object
-    }
-    
-    }
-    highlightLamp(intersects){
-        if(intersects[0].object.userData.isDevice != true){
-            if(this.oldDevice != undefined){
-                this.oldDevice.material.opacity = 1;
-            }
-        }else{
-           
-            if(this.oldDevice == undefined){
-                this.oldDevice = intersects[0].object
-            }
-            if(this.oldDevice.uuid != intersects[0].object.uuid || intersects[0].object.material.opacity == 1){
-                this.oldDevice.material.opacity = 1;
-                intersects[0].object.material.opacity = 0.8
-                this.oldDevice = intersects[0].object
-            }
-            
-        }
-       
-    }
-    click(intersects){
-        if(this.editMode == false)return;
-        $(".infoScreenContainer").show()
-        var id = intersects[0].object.userData.id;
-        var light = this.lightManager.getLightbyID(id)
-        this.updateScreen(light);
-
-    }
+   
     updateScreen(device){
         var container = document.createElement("div")
         var header = document.createElement("div")

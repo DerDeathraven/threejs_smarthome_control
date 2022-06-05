@@ -16,7 +16,7 @@ export class PlaceModeManager{
         //Managment Arrays
         this.placedRooms = []
         this.placedLamps = []
-
+ 
         //state machine booleans
         this.placing = false;
         this.placeLamp = false;

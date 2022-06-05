@@ -66,6 +66,12 @@ export class RoomManager{
         })
         return exportArr
     }
+    setInteractionManager(interactionManager) {
+        this.interactionManager = interactionManager
+        this.rooms.forEach(room =>{
+            this.interactionManager.add("hover",room)
+        })
+    }
     createDomElement(){
         var me = this
         var container = document.createElement("div")
