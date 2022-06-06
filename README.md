@@ -4,6 +4,35 @@
 
 This Nodejs Application uses my Smarthome data to build a 3D environment using Three.js in which I can monitor and control these devices
 
+a mockup version is in the works!
+
+## How to Configure
+
+### Installation
+
+Clone the repository
+cd into the repository
+
+```
+npm install
+nodemon
+```
+
+open localhost:3000
+
+### Configure
+
+the app listens for a MQTT server at localhost:1883
+when configured the app will accept messages with the syntax deviceType/deviceName -> light/light-0
+
+### Usage
+
+- Rooms can be added by clicking the "Place Mode" button and selecting the area of the room
+- Lamps can be placed in the same mode by pressing the "Place Lamp" button and clicking inside a Room
+- Leaving the mode will automatically save all placed objects.
+- outside of the place-mode lamps can be controlled by clicking on them
+- the name of a device can be found by hovering over it
+
 ## Tech Used
 
 ### Backend
