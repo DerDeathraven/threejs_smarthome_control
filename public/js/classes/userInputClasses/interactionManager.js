@@ -3,10 +3,11 @@ import * as THREE from "three"
  * This Manager is responsible for mouse events
  */
 export class InteractionManager{
-    constructor(scene,camera,userInputManager){
+    constructor(scene,camera,userInputManager,displayManager){
         this.scene = scene;
         this.camera = camera;
         this.userInputManager = userInputManager;
+        this.displayManager = displayManager;
 
         this.mouseEnter = []
         this.mouseLeave = []
@@ -81,12 +82,14 @@ export class InteractionManager{
     fireEvent(action){
         
         this.interactions++
+        var object
         switch(action){
             case "mouseleave":
                 this.mouseLeave.forEach(e=>{
                     
                     if(e.object.uuid == this.lastObject.uuid){
                         e.mouseLeave()
+                        object = e
                     }
                 })
             break;
@@ -94,11 +97,13 @@ export class InteractionManager{
                 this.mouseEnter.forEach(e=>{
                     if(e.object.uuid == this.currentContact.uuid){
                         e.mouseEnter()
+                        object = e
 
                     }
                 })
             break;
         }
+        this.displayManager.fireEvent(object,action)
     }
 
     /*Generator helper functions */

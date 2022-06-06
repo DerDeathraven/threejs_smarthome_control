@@ -2,20 +2,21 @@ import * as THREE from "three"
 import {HoverManager} from "hoverManager"
 
 export class PlaceModeManager{
-    constructor(scene,camera,lightManager,roomManager,connectionManager,userInputManager){
+    constructor(manager){
+        this.name = "placeModeManager"
 
         //Global Objects
-        this.scene = scene;
-        this.camera = camera
-        this.lightManager = lightManager //all lights in scene
-        this.roomManager = roomManager // all rooms in scene
-        this.hoverManager = new HoverManager(scene, camera, lightManager) //handle userinputs
-        this.connectionManager = connectionManager // handle connection to server
-        this.userInputManager = userInputManager // handle user input
+        this.scene = manager.scene;
+        this.camera = manager.camera
+        this.lightManager = manager.lightManager //all lights in scene
+        this.roomManager = manager.roomManager // all rooms in scene
+        this.connectionManager = manager.connectionManager // handle connection to server
+        this.userInputManager = manager.userInputManager // handle user input
 
         //Managment Arrays
         this.placedRooms = []
         this.placedLamps = []
+        this.relatedType = []
  
         //state machine booleans
         this.placing = false;
@@ -85,7 +86,6 @@ export class PlaceModeManager{
         this.raycaster.setFromCamera( this.userInputManager.mousePosition, this.camera );
         
         var intersects = this.raycaster.intersectObjects( this.scene.children );
-        this.hoverManager.update(intersects)
        if(this.placing ){
         if(intersects[0].userData){
             intersects = intersects[1]

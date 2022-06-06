@@ -4,6 +4,7 @@ export class SceneStateMachine{
         this.needsUpdate = false;
         this.placeModeManager = placeModeManager;
         this.deviceToggleManager = deviceToggleManager;
+        this.deviceToggleManager.startOverwatch()
     }
     changeMode(){
         this.isPlaceMode = !this.isPlaceMode;

@@ -7,6 +7,7 @@ export class Room{
      * @param {Object} roomData 
      */
     constructor(roomData){
+        this.type = "Room";
         this.id = roomData.id;
         this.name = roomData.name;
         this.position = roomData.position;

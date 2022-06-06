@@ -3,19 +3,19 @@ import { OrbitControls } from "orbi";
 import { ConnectionManager } from "connectionManager";
 import { JqueryManager } from "jqueryManager";
 import { SceneStateMachine } from "sceneStateMachine";
-import { PlaceModeManager } from "placeModeManager";
 import { RoomManager } from "roomManager";
 import { LightManager } from "lightManager";
 import { UserInputManager } from "userInputManager";
 import { DeviceToggleManager } from "deviceToggleManager";
 import { InteractionManager } from "interactionManager";
+import { DisplayManager } from "displayManager";
 
 var camera,renderer,controls,ground;
 
 
 var sceneStateMachine
 var jqueryManager 
-var placeModeManager
+var displayManager
 var deviceToggleManager
 var interactionManager
 
@@ -54,17 +54,17 @@ function init() {
     scene.add(ambient)
     scene.add(ground)
     //connect classes
-    interactionManager = new InteractionManager(scene,camera,userInputManager)
-
+    displayManager = new DisplayManager(scene,camera,lightManager,roomManager,connectionManager,userInputManager)
+    interactionManager = new InteractionManager(scene,camera,userInputManager,displayManager)
     lightManager.setInteractionManager(interactionManager)
     roomManager.setInteractionManager(interactionManager)
 
-    placeModeManager = new PlaceModeManager(scene,camera,lightManager,roomManager,connectionManager,userInputManager)
+   
     deviceToggleManager = new DeviceToggleManager(scene,camera,userInputManager,connectionManager)
-    sceneStateMachine = new SceneStateMachine(placeModeManager,deviceToggleManager)
+    sceneStateMachine = new SceneStateMachine(displayManager.getManager("placeModeManager"),deviceToggleManager)
     jqueryManager =  new JqueryManager(sceneStateMachine)
-    connectionManager.managers.push(roomManager)
-
+  
+    
 
     //renderer -> die "mach-sichtbar-maschiene"
     renderer = new THREE.WebGLRenderer();
@@ -90,7 +90,7 @@ function animate(){
         jqueryManager.updateHud()
        
     }
-    placeModeManager.update(camera)
+    displayManager.getManager("placeModeManager").update(camera)
     interactionManager.update()
 
   

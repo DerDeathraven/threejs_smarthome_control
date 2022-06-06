@@ -3,7 +3,7 @@ import * as THREE from "three"
 
 export class Light{
     constructor(id,name,state,color,position){
-        
+        this.type = "light";
         this.id = id;
         this.name = name;
         this.state = state;
