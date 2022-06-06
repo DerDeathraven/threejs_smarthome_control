@@ -8,22 +8,28 @@
     <script type="importmap">
         {
             "imports": {
-                "light" : "./js/classes/Light.js",
                 "three": "https://threejs.org/build/three.module.js",
                 "objloader": "https://threejs.org/examples/jsm/loaders/OBJLoader.js",
                 "orbi":"https://threejs.org/examples/jsm/controls/OrbitControls.js",
                 "glb":"https://threejs.org/examples/jsm/loaders/GLTFLoader.js",
-                "lightManager": "./js/classes/LightManager.js",
-                "connectionManager":"./js/classes/ConnectionManager.js",
-                "jqueryManager": "./js/classes/jqueryManager.js",
-                "sceneStateMachine":"./js/classes/sceneStateMachine.js",
-                "placeModeManager":"./js/classes/placeModeManager.js",
-                "hoverManager":"./js/classes/hoverManager.js",
-                "roomManager":"./js/classes/roomManager.js",
-                "room":"./js/classes/room.js",
-                "userInputManager":"./js/classes/userInputManger.js",
-                "deviceToggleManager":"./js/classes/deviceToggleManager.js",
-                "interactionManager":"./js/classes/interactionManager.js"
+
+                "light" : "./js/classes/ThreeJSClasses/classes/Light.js",
+                "room":"./js/classes/ThreeJSClasses/classes/room.js",
+
+                "lightManager": "./js/classes/ThreeJSClasses/manager/LightManager.js",
+                "roomManager":"./js/classes/ThreeJSClasses/manager/roomManager.js",
+
+                "connectionManager":"./js/classes/systemClasses/ConnectionManager.js",
+                "sceneStateMachine":"./js/classes/systemClasses/sceneStateMachine.js",
+
+                
+                "placeModeManager":"./js/classes/displayClasses/modules/placeModeManager.js",
+              
+                "jqueryManager": "./js/classes/userInputClasses/jqueryManager.js",
+                "hoverManager":"./js/classes/userInputClasses/hoverManager.js",
+                "userInputManager":"./js/classes/userInputClasses/userInputManger.js",
+                "deviceToggleManager":"./js/classes/userInputClasses/deviceToggleManager.js",
+                "interactionManager":"./js/classes/userInputClasses/interactionManager.js"
             }
         }
     </script>
