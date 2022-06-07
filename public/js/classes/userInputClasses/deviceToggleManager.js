@@ -29,8 +29,10 @@ export class DeviceToggleManager{
         this.raycaster.setFromCamera( this.userInputManager.mousePosition, this.camera );
         var intersects = this.raycaster.intersectObjects( this.scene.children );
         if(intersects.length > 0){
-            if(intersects[0].object.userData.isDevice){
-              this.connectionManager.switchStateOfDevice(intersects[0].object.userData.id)
+            var target = intersects[0];
+            if(target.object.parent.type ==="Group")target.object = target.object.parent
+            if(target.object.userData.isDevice){
+              this.connectionManager.switchStateOfDevice(target.object.userData.id)
             }
         }
 

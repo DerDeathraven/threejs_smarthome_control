@@ -24,10 +24,13 @@ export class Light{
         cube.userData.isLamp = true;
         cube.userData.isDevice = true;
         this.object = cube
+        this.changeState()
+        
         return
         
         
     }
+    
     generateObject(){
         const color = this.state ? 0xFFA500 : 0x808080;
         const geometry = new THREE.BoxGeometry( 1, 1, 1 );
@@ -61,11 +64,23 @@ export class Light{
     }
     changeState(state){
         this.state = state;
+       
         if(!this.state){
-            this.object.material.color.setHex(0x808080);
+            this.object.traverse(function (child) {  
+                if (child instanceof THREE.Mesh) {
+                    child.material.color.setHex(0x808080)
+                    
+                }
+            });
         }else{
-            this.object.material.color.setHex(0xFFA500) ;
+            this.object.traverse(function (child) {  
+                if (child instanceof THREE.Mesh) {
+                    child.material.color.setHex(0xFFA500)
+                    
+                }
+            });
         }
+        
     }
     mouseEnter(){
         console.log("mouseEnter")
