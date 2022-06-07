@@ -75,7 +75,7 @@ export class Light{
         }else{
             this.object.traverse(function (child) {  
                 if (child instanceof THREE.Mesh) {
-                    child.material.color.setHex(0xFFA500)
+                    child.material.color.setHex(0xFFffff)
                     
                 }
             });
