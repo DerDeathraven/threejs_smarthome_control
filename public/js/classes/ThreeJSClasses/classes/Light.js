@@ -1,4 +1,5 @@
 import * as THREE from "three"
+import {FileLoader} from "fileLoader"
 
 
 export class Light{
@@ -9,9 +10,23 @@ export class Light{
         this.state = state;
         this.color = color;
         this.position = position;
-        this.object = this.generateObject();
+        this.object  = {}
         this.domElement = this.createDomElement()
 
+    }
+    async loadObject(){
+        
+        var cube = await FileLoader.loadFile("redstone-lamp")
+        console.log(cube)
+        cube.scale.setScalar(0.02) 
+        cube.userData.id = this.id
+        cube.position.copy(this.position)
+        cube.userData.isLamp = true;
+        cube.userData.isDevice = true;
+        this.object = cube
+        return
+        
+        
     }
     generateObject(){
         const color = this.state ? 0xFFA500 : 0x808080;
@@ -53,9 +68,11 @@ export class Light{
         }
     }
     mouseEnter(){
-        this.object.material.opacity = 0.8
+        console.log("mouseEnter")
+        
+        
     }
     mouseLeave(){
-        this.object.material.opacity = 1
+        
     }
 }

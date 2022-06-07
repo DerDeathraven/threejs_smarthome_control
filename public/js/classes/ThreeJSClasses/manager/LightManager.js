@@ -14,8 +14,13 @@ export class LightManager{
             d.id = me.idCounter++
             var light = new Light(d.id,d.name,d.state,d.color,d.position)
             me.lights.push(light)
-            me.scene.add(light.object)
+            light.loadObject().then(f=>{
+                
+                this.scene.add(light.object)
+                this.interactionManager.add("hover",light)
+            })
         })
+        
     }
     
     switchStates(id,state){
@@ -45,7 +50,11 @@ export class LightManager{
         light.name = light.name || `light-${id}`
         var newLight = new Light(id,light.name,light.state,light.color,light.position)
         this.lights.push(newLight)
-        this.scene.add(newLight.object)
+        newLight.loadObject().then(f=>{
+            console.log("loaded")
+            this.scene.add(newLight.object)
+        })
+        
         console.log(light.position)
         newLight.object.position.copy(light.position)
         return newLight
@@ -76,8 +85,6 @@ export class LightManager{
     }
     setInteractionManager(interactionManager) {
         this.interactionManager = interactionManager
-        this.lights.forEach(e=>{
-            this.interactionManager.add("hover",e)
-        })
+        
     }
 }
