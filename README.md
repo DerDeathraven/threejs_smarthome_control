@@ -27,7 +27,7 @@ open localhost:3000
 
 ### Configure
 
-the app listens for a MQTT server at localhost:1883
+the app listens for an MQTT server at localhost:1883
 when configured the app will accept messages with the syntax deviceType/deviceName -> light/light-0
 
 ### Usage
