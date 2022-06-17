@@ -20,6 +20,11 @@ nodemon
 
 open localhost:3000
 
+## Arguments
+
+- -h mqttHostname (optional) defaults to "localhost"
+- -p mqttPort (optional) defaults to "1883"
+
 ### Configure
 
 the app listens for a MQTT server at localhost:1883
@@ -32,6 +37,7 @@ when configured the app will accept messages with the syntax deviceType/deviceNa
 - Leaving the mode will automatically save all placed objects.
 - outside of the place-mode lamps can be controlled by clicking on them
 - the name of a device can be found by hovering over it
+- switching the lamp will trigger a message on the topic switch/deviceID -> switch/0 for lamp-0
 
 ## Tech Used
 
