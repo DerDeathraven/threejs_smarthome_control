@@ -35,7 +35,7 @@ connectionManager.init().then(e=>{
 
 function init() {
     //licht
-    var ambient =  new THREE.AmbientLight(0xFFFFFF,0)   
+    var ambient =  new THREE.AmbientLight(0xFFFFFF,1)   
     //camera
     camera = new THREE.PerspectiveCamera( 
         45, //Field of view
