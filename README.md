@@ -15,10 +15,15 @@ cd into the repository
 
 ```
 npm install
-nodemon
+node index.js
 ```
 
 open localhost:3000
+
+## Arguments
+
+- -h mqttHostname (optional) defaults to "localhost"
+- -p mqttPort (optional) defaults to "1883"
 
 ### Configure
 
