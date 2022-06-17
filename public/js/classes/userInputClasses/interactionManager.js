@@ -29,6 +29,7 @@ export class InteractionManager{
     add(variant,object){
         switch(variant){
             case "hover":
+                console.log(object);
                 this.mouseEnter = [...this.mouseEnter,object]
                 this.mouseLeave = [...this.mouseLeave,object] //ES6 trial,
                 break;
@@ -60,8 +61,13 @@ export class InteractionManager{
 
         
         this.currentContact = intersects[0].object
-
+        
+        if(this.currentContact.parent.type === "Group") {
+        
+            this.currentContact = this.currentContact.parent
+        }
         if(this.lastObject.uuid == this.currentContact.uuid) return; //Dont fire multiple times on the same object
+        
         
         if(this.subscribedUuids.indexOf(this.lastObject.uuid)!=-1){
             this.fireEvent("mouseleave") //Fire mouseleave when the last object was registered
@@ -69,7 +75,7 @@ export class InteractionManager{
         if(this.subscribedUuids.indexOf(this.currentContact.uuid)!=-1){
             this.fireEvent("mouseenter") //fire mouseenter when the current object is registered
         }
-        this.lastObject = intersects[0].object
+        this.lastObject = this.currentContact
 
 
         

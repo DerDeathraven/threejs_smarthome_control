@@ -1,10 +1,24 @@
 const mqtt = require('mqtt');
+const yargs = require('yargs');
 const filesystemManager = require("./fileSystemManager")
-
+//Arguments for this Module
+yargs.option("mqttHost",{
+    alias: "h",
+    description: "mqtt Host adress",
+    type: "string"
+})
+.option("mqttPort",{
+    description: "mqtt Port number",
+    alias: "p",
+    type: "number"
+})
 
 class MqttManager{
     constructor(){
-        this.client = mqtt.connect("mqtt://localhost:1883")
+        this.hostname = yargs.argv.mqttHost || "localhost";
+        this.port = yargs.argv.mqttPort || 1883;
+        
+        this.client = mqtt.connect(`mqtt://${this.hostname}:${this.port}`)
         this.lights = filesystemManager.getLights()
         this.client.on("connect",e=>{
             console.log("Connected to MQTT")

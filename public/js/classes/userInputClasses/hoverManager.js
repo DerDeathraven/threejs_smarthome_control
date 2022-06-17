@@ -28,7 +28,7 @@ export class HoverManager{
     updateScreen(device){
         var container = document.createElement("div")
         var header = document.createElement("div")
-        var content =  this.editMode ?this.generateScreenEditMode(device) : this.generateScreenContent(device)
+        var content =  this.editMode ? this.generateScreenEditMode(device) : this.generateScreenContent(device)
 
         //fill header
         $(header).text("Light").addClass("infoScreenHeader").appendTo(container)

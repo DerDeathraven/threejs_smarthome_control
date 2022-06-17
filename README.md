@@ -15,7 +15,7 @@ cd into the repository
 
 ```
 npm install
-nodemon
+node index.js
 ```
 
 open localhost:3000
@@ -28,6 +28,9 @@ open localhost:3000
 ### Configure
 
 the app listens for a MQTT server at localhost:1883
+
+to change that use -h for the MQTT hostname and -p for the port number
+
 when configured the app will accept messages with the syntax deviceType/deviceName -> light/light-0
 
 ### Usage
