@@ -11,6 +11,8 @@ export class InteractionManager{
 
         this.mouseEnter = []
         this.mouseLeave = []
+        this.click = []
+
 
         this.subscribedUuids = []
 
@@ -39,6 +41,9 @@ export class InteractionManager{
             case "mouseleave":
                 this.mouseLeave = [...this.mouseLeave,object]
                 break;
+            case "click":
+                this.click = [...this.click,object]
+                break;
         }
         this.generateSubscribeedUuids()
 
@@ -49,7 +54,7 @@ export class InteractionManager{
      */
     update(){
         
-        if(this.subscribedUuids.length == 0) return //Exit when no subscribers are present
+        if(this.subscribedUuids.length == 0)return  //Exit when no subscribers are present
 
 
         this.raycaster.setFromCamera( this.userInputManager.mousePosition, this.camera );
@@ -124,6 +129,7 @@ export class InteractionManager{
                 uuids.push(object.uuid)
             }
         }
+        this.click.forEach(searcher)
         this.mouseEnter.forEach(searcher)
         this.mouseLeave.forEach(searcher)
         this.subscribedUuids = uuids

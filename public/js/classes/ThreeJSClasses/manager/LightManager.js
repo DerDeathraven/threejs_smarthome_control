@@ -60,6 +60,17 @@ export class LightManager{
         newLight.object.position.copy(light.position)
         return newLight
     }
+    placeObject(position){
+        var id = this.counter++
+        var  name = `light-${id}`
+        var newLight = new Light(id,name,false,0xFFFFFF,position)
+        this.lights.push(newLight)
+        newLight.loadObject().then(f=>{
+            this.scene.add(newLight.object)
+        })
+        return newLight
+        
+    }
     deleteLight(lID){
         var pos
         this.lights.forEach((l,i)=>{

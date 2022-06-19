@@ -35,7 +35,7 @@ export class InfoDisplay extends Display {
     }
     generateScreenContent(device){
         var container = document.createElement("div")
-        var ignoreArr = ["object","position","id","domElement"]
+        var ignoreArr = ["object","position","id","domElement","jlcd"]
         Object.keys(device).forEach(k=>{
             if(ignoreArr.indexOf(k)==-1){
                 var keyPair = document.createElement("div")

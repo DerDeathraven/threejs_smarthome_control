@@ -1,4 +1,5 @@
 import {OBJLoader}  from 'obj';
+
 import * as THREE from "three"
 
 export class FileLoader{
