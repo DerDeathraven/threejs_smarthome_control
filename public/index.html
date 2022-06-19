@@ -1,74 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Smarthome</title>
     <script type="importmap">
-        {
-            "imports": {
-                "three": "https://threejs.org/build/three.module.js",
-                "objloader": "https://threejs.org/examples/jsm/loaders/OBJLoader.js",
-                "orbi":"https://threejs.org/examples/jsm/controls/OrbitControls.js",
-                "glb":"https://threejs.org/examples/jsm/loaders/GLTFLoader.js",
-                "obj":"https://threejs.org/examples/jsm/loaders/OBJLoader.js",
+      {
+        "imports": {
+          "three": "https://threejs.org/build/three.module.js",
+          "objloader": "https://threejs.org/examples/jsm/loaders/OBJLoader.js",
+          "orbi": "https://threejs.org/examples/jsm/controls/OrbitControls.js",
+          "glb": "https://threejs.org/examples/jsm/loaders/GLTFLoader.js",
+          "obj": "https://threejs.org/examples/jsm/loaders/OBJLoader.js",
 
-                "light" : "./js/classes/ThreeJSClasses/classes/Light.js",
-                "room":"./js/classes/ThreeJSClasses/classes/room.js",
+          "object": "./js/classes/ThreeJSClasses/classes/Object.js",
+          "light": "./js/classes/ThreeJSClasses/classes/Light.js",
+          "room": "./js/classes/ThreeJSClasses/classes/room.js",
+          "door": "./js/classes/ThreeJSClasses/classes/Door.js",
 
-                "lightManager": "./js/classes/ThreeJSClasses/manager/LightManager.js",
-                "roomManager":"./js/classes/ThreeJSClasses/manager/roomManager.js",
+          "lightManager": "./js/classes/ThreeJSClasses/manager/LightManager.js",
+          "roomManager": "./js/classes/ThreeJSClasses/manager/roomManager.js",
+          "doorManager": "./js/classes/ThreeJSClasses/manager/doorManager.js",
 
-                "connectionManager":"./js/classes/systemClasses/ConnectionManager.js",
-                "sceneStateMachine":"./js/classes/systemClasses/sceneStateMachine.js",
-                "fileLoader":"./js/classes/systemClasses/fileLoader.js",
+          "connectionManager": "./js/classes/systemClasses/ConnectionManager.js",
+          "sceneStateMachine": "./js/classes/systemClasses/sceneStateMachine.js",
+          "fileLoader": "./js/classes/systemClasses/fileLoader.js",
 
-                
-                "placeModeManager":"./js/classes/displayClasses/modules/placeModeManager.js",
-                "display":"./js/classes/displayClasses/abstract/display.js",
-                "infoDisplay":"./js/classes/displayClasses/modules/infoDisplay.js",
-                "displayManager":"./js/classes/displayClasses/displayManager.js",
-              
-                "jqueryManager": "./js/classes/userInputClasses/jqueryManager.js",
-                "hoverManager":"./js/classes/userInputClasses/hoverManager.js",
-                "userInputManager":"./js/classes/userInputClasses/userInputManger.js",
-                "deviceToggleManager":"./js/classes/userInputClasses/deviceToggleManager.js",
-                "interactionManager":"./js/classes/userInputClasses/interactionManager.js"
-            }
+          "placeModeManager": "./js/classes/displayClasses/modules/placeModeManager.js",
+          "display": "./js/classes/displayClasses/abstract/display.js",
+          "infoDisplay": "./js/classes/displayClasses/modules/infoDisplay.js",
+          "displayManager": "./js/classes/displayClasses/displayManager.js",
+
+          "jqueryManager": "./js/classes/userInputClasses/jqueryManager.js",
+          "hoverManager": "./js/classes/userInputClasses/hoverManager.js",
+          "userInputManager": "./js/classes/userInputClasses/userInputManger.js",
+          "deviceToggleManager": "./js/classes/userInputClasses/deviceToggleManager.js",
+          "interactionManager": "./js/classes/userInputClasses/interactionManager.js",
+
+          "jlcdLib": "./js/jlcdLib.js"
         }
+      }
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous" defer></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+      defer
+    ></script>
 
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.css" />
     <script src="/socket.io/socket.io.js" defer></script>
-    <script  type="module" src="./js/main.js" defer></script>
-</head>
-<body>
-    <div id="threejsHook">
-
-    </div>
+    <script type="module" src="./js/main.js" defer></script>
+  </head>
+  <body>
+    <div id="threejsHook"></div>
     <div class="changeMode menuItem">
-        <div class="changeModeText">
-            Place Mode
-        </div>
-        
+      <div class="changeModeText">Place Mode</div>
     </div>
     <div class="placeMode menuItem">
-        <div class="placeModeHeader">
-            Place Lamps
-        </div>
-        <div class="placeModeText">
-            <div class="roomText selector" data-id="0">Place Room</div> <div class="lampText selector" data-id="1">Place Lamp</div>
-        </div>
-        <div class="objectList">
-
-        </div>
+      <div class="placeModeHeader">Place Lamps</div>
+      <div class="placeModeText">
+        <div class="roomText selector" data-id="0">Place Room</div>
+        <div class="lampText selector" data-id="1">Place Lamp</div>
+      </div>
+      <div class="objectList"></div>
     </div>
-    <div class="infoScreenContainer menuItem" hidden>
-
-    </div>
-    
-
-</body>
+    <div class="infoScreenContainer menuItem" hidden></div>
+  </body>
 </html>

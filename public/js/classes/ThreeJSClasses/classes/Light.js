@@ -1,10 +1,27 @@
 import * as THREE from "three"
 import {FileLoader} from "fileLoader"
+import {Object} from "object";
+import {Jlcd} from "jlcdLib"
 
 
-export class Light{
-    constructor(id,name,state,color,position){
+export class Light extends Object{
+    
+
+    /**
+     * 
+     * @param {Number} id 
+     * @param {String} name 
+     * @param {Boolean} state 
+     * @param {Number} color 
+     * @param {Vector3} position 
+     */
+    constructor(id,name,state,color,position,file = "redstone-lamp"){
+        super(name,id,position,file)
+        
+        
         this.type = "light";
+        
+        
         this.id = id;
         this.name = name;
         this.state = state;
@@ -13,19 +30,14 @@ export class Light{
         this.object  = {}
         this.domElement = this.createDomElement()
 
+
     }
     async loadObject(){
         
-        var cube = await FileLoader.loadFile("redstone-lamp")
-        console.log(cube)
-        cube.scale.setScalar(0.02) 
-        cube.userData.id = this.id
-        cube.position.copy(this.position)
-        cube.userData.isLamp = true;
-        cube.userData.isDevice = true;
-        this.object = cube
+        var object = await super.loadObject();
+        object.scale.setScalar(0.02) 
         this.changeState()
-        
+        this.object = object;
         return
         
         
@@ -66,28 +78,26 @@ export class Light{
         this.state = state;
        
         if(!this.state){
-            this.object.traverse(function (child) {  
-                if (child instanceof THREE.Mesh) {
-                    child.material.color.setHex(0x808080)
-                    
-                }
-            });
+           
+            
+           
+            
+            this.jlcd.setColor(0x808080)
+            
+
+            
         }else{
-            this.object.traverse(function (child) {  
-                if (child instanceof THREE.Mesh) {
-                    child.material.color.setHex(0xFFffff)
-                    
-                }
-            });
+            this.jlcd.setColor(0xFFffff)
+            
         }
         
     }
     mouseEnter(){
-        console.log("mouseEnter")
+        //this.jlcd.setGlobalValue("material.opacity",0.8)
         
         
     }
     mouseLeave(){
-        
+        //this.jlcd.setGlobalValue("material.opacity",1)
     }
 }

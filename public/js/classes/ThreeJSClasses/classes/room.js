@@ -1,16 +1,17 @@
 import * as THREE from "three"
+import {Object} from "object";
 
-
-export class Room{
+export class Room extends Object{
     /**
      * Wrapper für Three.js Object
      * @param {Object} roomData 
      */
     constructor(roomData){
+        super(roomData.name,roomData.id,roomData.position,"")
         this.type = "Room";
-        this.id = roomData.id;
-        this.name = roomData.name;
-        this.position = roomData.position;
+       
+        
+       
         this.lights  = roomData.lights || [];
         this.scaleX = roomData.scaleX
         this.scaleZ = roomData.scaleZ
@@ -45,7 +46,7 @@ export class Room{
         var dataContainer = document.createElement("div")
         var button = document.createElement("div")
         var lights = document.createElement("div")
-
+        
         lightsList.forEach(f=>{
             $(lights).append(f.domElement)
         })

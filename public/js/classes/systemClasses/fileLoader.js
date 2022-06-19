@@ -17,7 +17,7 @@ export class FileLoader{
                 path,
                 function (object){
                     object.traverse(function (child) {  
-                        console.log(child) // aka setTexture
+                       
                         if (child instanceof THREE.Mesh) {
                             child.material.map = texture;
                         }
@@ -38,8 +38,12 @@ export class FileLoader{
         
     }
     static async loadTextures(file){
+        var ending ="jpg"
+        
+        
+
         const retPromise = new Promise((resolve, reject) =>{
-            var path = `models/${file}/${file}.jpg`
+            var path = `models/${file}/${file}.${ending}`;
             const loader = new THREE.TextureLoader();
 
 
@@ -57,5 +61,23 @@ export class FileLoader{
         )
         })
         return retPromise
+    }
+     static  async checkEnding(file){
+    
+
+        var myLog = new File(["String"],`models/${file}/${file}.jpg`);
+
+        // See if the file exists
+        if(myLog.exists()){
+            ending = "jpg"
+            return ending
+        }else{
+            ending = "png"; 
+            return ending
+        }
+       
+        
+        
+       
     }
 }

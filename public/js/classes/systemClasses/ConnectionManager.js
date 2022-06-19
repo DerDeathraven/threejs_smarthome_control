@@ -21,7 +21,7 @@ export class ConnectionManager{
                 Object.keys(e).forEach(k=>{
                     me.managers.forEach(m=>{
                         if(m.findWord==k){
-                            console.log(m)
+                       
                             m.import(e[k])
                         }
                     })
@@ -92,5 +92,14 @@ export class ConnectionManager{
     switchStateOfDevice(deviceID){
         this.socket.emit("switchStateOfDevice", deviceID)
         
+    }
+    update(){
+        this.managers.forEach(f=>{
+
+            if(f.update != undefined){
+                f.update()
+            }
+            
+        })
     }
 }

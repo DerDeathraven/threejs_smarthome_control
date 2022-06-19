@@ -24,6 +24,7 @@ export class LightManager{
     }
     
     switchStates(id,state){
+       
         this.lights.find(x=>x.name === id).changeState(state)
     }
     getIDs(){

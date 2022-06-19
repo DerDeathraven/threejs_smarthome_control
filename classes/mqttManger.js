@@ -31,6 +31,7 @@ class MqttManager{
     subscribe(){
         
         this.client.subscribe("light/#")
+        this.client.subscribe("door/#")
     }
     unsubscribe(){
         

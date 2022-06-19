@@ -29,7 +29,7 @@ export class InteractionManager{
     add(variant,object){
         switch(variant){
             case "hover":
-                console.log(object);
+                
                 this.mouseEnter = [...this.mouseEnter,object]
                 this.mouseLeave = [...this.mouseLeave,object] //ES6 trial,
                 break;
@@ -76,6 +76,8 @@ export class InteractionManager{
             this.fireEvent("mouseenter") //fire mouseenter when the current object is registered
         }
         this.lastObject = this.currentContact
+
+
 
 
         

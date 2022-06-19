@@ -32,7 +32,7 @@ export class DeviceToggleManager{
             var target = intersects[0];
             if(target.object.parent.type ==="Group")target.object = target.object.parent
             if(target.object.userData.isDevice){
-              this.connectionManager.switchStateOfDevice(target.object.userData.id)
+              this.connectionManager.switchStateOfDevice(`${target.object.userData.type}-${target.object.userData.id}`)
             }
         }
 

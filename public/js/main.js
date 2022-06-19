@@ -9,6 +9,7 @@ import { UserInputManager } from "userInputManager";
 import { DeviceToggleManager } from "deviceToggleManager";
 import { InteractionManager } from "interactionManager";
 import { DisplayManager } from "displayManager";
+import { DoorManager } from "doorManager";
 
 var camera,renderer,controls,ground;
 
@@ -23,7 +24,8 @@ var scene = new THREE.Scene();
 var userInputManager = new UserInputManager()
 var lightManager = new LightManager(scene);
 var roomManager = new RoomManager(lightManager,scene)
-var connectionManager = new ConnectionManager([lightManager,roomManager]);
+var doorManager = new DoorManager(scene)
+var connectionManager = new ConnectionManager([lightManager,roomManager,doorManager ]);
 
 
 
@@ -58,6 +60,7 @@ function init() {
     interactionManager = new InteractionManager(scene,camera,userInputManager,displayManager)
     lightManager.setInteractionManager(interactionManager)
     roomManager.setInteractionManager(interactionManager)
+    doorManager.setInteractionManager(interactionManager)
 
    
     deviceToggleManager = new DeviceToggleManager(scene,camera,userInputManager,connectionManager)
@@ -93,7 +96,7 @@ function animate(){
     displayManager.getManager("placeModeManager").update(camera)
     interactionManager.update()
 
-  
+    connectionManager.update()
     controls.update();
 	renderer.render( scene, camera );
     
