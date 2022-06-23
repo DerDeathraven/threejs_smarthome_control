@@ -16,7 +16,7 @@ export class Object {
         this.position = position;
         this.file = file;
         
-        this.jlcd = new Jlcd(this) 
+        this.jlcd = new Jlcd(this) //Helper class to manage threejs objects
         this.type = "object";
         this.state = false;
 
@@ -42,17 +42,33 @@ export class Object {
             
             
         }
+        /**
+         * 
+         * @param {Number | Boolean} state The state of the object
+         */
         changeState(state){
             this.state = state;
         }
+
+        /**
+         * Events to be fired on mouse Enter
+         */
         mouseEnter(){
             this.jlcd.setGlobalValue("material.opacity",0.8)
         
         
         }
+
+        /**
+         * Events to be fired on mouse leave
+         */
         mouseLeave(){
             this.jlcd.setGlobalValue("material.opacity",0.8)
         }
+
+        /**
+         * Events to be fired every frame
+         */
         update(){
             
         }

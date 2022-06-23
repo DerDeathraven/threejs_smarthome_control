@@ -79,7 +79,7 @@ export class RoomManager{
         this.rooms.forEach(r=>{
             var lights = []
             r.lights.forEach(l=>{
-                lights.push(me.lightManager.getLightbyID(l))
+                lights.push(me.lightManager.getObjectbyID(l))
             })
             $(container).append(r.createDomElement(lights))
         })

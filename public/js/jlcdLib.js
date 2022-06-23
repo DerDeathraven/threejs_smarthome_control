@@ -1,3 +1,9 @@
+/**
+ * @author JLCD
+ * 
+ * 
+ */
+
 import * as THREE from "three";
 
 
@@ -27,6 +33,11 @@ export class Jlcd{
             }
         });
     }
+    /**
+     * To change the state of all meshes in a group
+     * @param {String} name Should be something like "material.opacity"
+     * @param {*} value the value this shoul be changed to 
+     */
     setGlobalValue(path,value){
        
 
@@ -37,6 +48,13 @@ export class Jlcd{
         });
         
     }
+
+    /**
+     * 
+     * @param {String} path Should be something like "material.opacity"
+     * @param {Object} obj Given Object
+     * @returns {*} value   the value of the property or null 
+     */
     findProperty(path,obj){
 
         var buff = path.split('.').reduce(function(prev, curr) {
@@ -54,6 +72,12 @@ export class Jlcd{
         
         return buff
     }
+    /**
+     * set the value of the Object but not of its children
+     * @param {String} path Should be something like "material.opacity"
+     * @param {*} value the value of the property
+     * @param {Object} obj Given Object
+     */
     setValue(path,value,obj){
         var i;
         path = path.split('.');

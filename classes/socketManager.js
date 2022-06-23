@@ -1,7 +1,7 @@
 const socketio = require("socket.io");
 const filesystemManager = require("./fileSystemManager")
 
-class SocketManager{
+class SocketManager{ 
     constructor(server,mqttManager){
         this.mqttManager = mqttManager;
         this.mqttManager.socketManager = this;
